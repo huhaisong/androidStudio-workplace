@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\build\\intermediates\\res\\merged\\debug\\layout\\message.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\src\\main\\res\\layout\\message.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\src\\main\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\build\\intermediates\\res\\merged\\debug\\layout\\custom_title.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\src\\main\\res\\layout\\custom_title.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\build\\intermediates\\res\\merged\\debug\\layout\\device_name.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\src\\main\\res\\layout\\device_name.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\build\\intermediates\\res\\merged\\debug\\layout\\device_list.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetoothChat\\src\\main\\res\\layout\\device_list.xml"
+    }
+]

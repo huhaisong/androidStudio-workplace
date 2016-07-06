@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\3DSensor\\vR_Launcher\\build\\intermediates\\res\\merged\\debug\\layout-v11\\abc_simple_decor.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\3DSensor\\vR_Launcher\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\20.0.0\\res\\layout-v11\\abc_simple_decor.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\3DSensor\\vR_Launcher\\build\\intermediates\\res\\merged\\debug\\layout-v11\\abc_action_bar_decor.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\3DSensor\\vR_Launcher\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\20.0.0\\res\\layout-v11\\abc_action_bar_decor.xml"
+    }
+]

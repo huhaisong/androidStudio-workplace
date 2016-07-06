@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\ic_launcher_icon.png",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\src\\main\\res\\drawable-hdpi\\ic_launcher_icon.png"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\wall.jpg",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\src\\main\\res\\drawable-hdpi\\wall.jpg"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi-v4\\welcom.png",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\src\\main\\res\\drawable-hdpi\\welcom.png"
+    }
+]

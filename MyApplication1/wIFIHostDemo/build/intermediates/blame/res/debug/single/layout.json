@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\wIFIHostDemo\\build\\intermediates\\res\\merged\\debug\\layout\\wt_search_device_anima.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\wIFIHostDemo\\src\\main\\res\\layout\\wt_search_device_anima.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\wIFIHostDemo\\build\\intermediates\\res\\merged\\debug\\layout\\wtdialog.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\wIFIHostDemo\\src\\main\\res\\layout\\wtdialog.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\wIFIHostDemo\\build\\intermediates\\res\\merged\\debug\\layout\\wtitem.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\wIFIHostDemo\\src\\main\\res\\layout\\wtitem.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\wIFIHostDemo\\build\\intermediates\\res\\merged\\debug\\layout\\wt_main.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\wIFIHostDemo\\src\\main\\res\\layout\\wt_main.xml"
+    }
+]

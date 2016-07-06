@@ -1,0 +1,14 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000" >
+    <RelativeLayout  
+        android:layout_width="fill_parent"
+    	android:layout_height="fill_parent">
+    	<com.lensun.arplayer.VRImageView 
+    	    android:layout_width="fill_parent"  
+    	    android:id="@+id/imagevrview"
+    		android:layout_height="fill_parent">   
+    	</com.lensun.arplayer.VRImageView>
+    </RelativeLayout>
+</FrameLayout>

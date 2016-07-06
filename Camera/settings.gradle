@@ -1,0 +1,2 @@
+include ':camera_read', ':opengl', ':test', ':app'
+include ':playCamera_V300'

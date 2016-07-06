@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\ic_launcher_icon.png",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\src\\main\\res\\drawable-xhdpi\\ic_launcher_icon.png"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\btn_camera_all.png",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\src\\main\\res\\drawable-xhdpi\\btn_camera_all.png"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi-v4\\btn_camera_all_click.png",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\Camera\\playCamera_V300\\src\\main\\res\\drawable-xhdpi\\btn_camera_all_click.png"
+    }
+]

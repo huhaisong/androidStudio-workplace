@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetooth\\build\\intermediates\\res\\merged\\debug\\layout\\devices.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetooth\\src\\main\\res\\layout\\devices.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetooth\\build\\intermediates\\res\\merged\\debug\\layout\\chat.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetooth\\src\\main\\res\\layout\\chat.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetooth\\build\\intermediates\\res\\merged\\debug\\layout\\list_item.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetooth\\src\\main\\res\\layout\\list_item.xml"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetooth\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\MyApplication1\\bluetooth\\src\\main\\res\\layout\\main.xml"
+    }
+]

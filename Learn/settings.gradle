@@ -1,0 +1,1 @@
+include ':app', ':texture', ':texture2', ':texture3', ':texturetest', ':3d_model', ':3d_load', ':sphere', ':cardboard', ':mylibrary', ':loadbyengine'

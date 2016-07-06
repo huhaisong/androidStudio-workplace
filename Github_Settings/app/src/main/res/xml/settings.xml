@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <header
+        android:icon="@drawable/ic_appwidget_settings_wifi_on_holo"
+        android:title="WLAN" />
+
+    <header
+        android:icon="@drawable/ic_appwidget_settings_bluetooth_on_holo"
+        android:title="蓝牙" />
+
+    <header android:title="生成二维码" />
+</preference-headers>

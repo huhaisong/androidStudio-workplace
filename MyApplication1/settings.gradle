@@ -1,0 +1,4 @@
+include ':app', ':libzxing', ':scan'
+include ':bluetoothChat'
+include ':bluetooth'
+include ':wIFIHostDemo'
