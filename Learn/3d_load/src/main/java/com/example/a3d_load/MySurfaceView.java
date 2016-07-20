@@ -68,7 +68,7 @@ public class MySurfaceView extends GLSurfaceView {
             GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
 
             MatrixState.pushMatrix();
-            MatrixState.translate(0, -2f, -75f);   //ch.obj
+            MatrixState.translate(0, -2f, -175f);   //ch.obj
             MatrixState.rotate(yAngle, 0, 1, 0);
             MatrixState.rotate(xAngle, 1, 0, 0);
 
@@ -94,7 +94,7 @@ public class MySurfaceView extends GLSurfaceView {
             MatrixState.setInitStack();
             //初始化光源位置
             MatrixState.setLightLocation(40, 10, 20);
-            lovo = LoadUtil2.loadFromFile("123.obj", MySurfaceView.this.getResources(), MySurfaceView.this);
+            lovo = LoadUtil2.loadFromFile("st1.obj", MySurfaceView.this.getResources(), MySurfaceView.this);
            // textureId = initTexture(R.drawable.ghxp);
         }
     }

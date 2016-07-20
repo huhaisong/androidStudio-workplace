@@ -124,7 +124,6 @@ public class OrientationEKF {
             this.processGyroTempM2.scale((double) (dT * dT));
             this.mP.plusEquals(this.processGyroTempM2);
         }
-
         this.sensorTimeStampGyro = sensorTimeStamp;
         this.lastGyro.set(gyro);
     }

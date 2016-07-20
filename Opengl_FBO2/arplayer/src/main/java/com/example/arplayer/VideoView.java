@@ -58,18 +58,15 @@ public class VideoView extends GLSurfaceView {
     }
 
     public void seekTo(int seek) {
-
         mRenderer.seekTo(seek);
     }
 
     public void stop() {
-
         mRenderer.stopPlayback();
     }
 
     public long getDuration() {
         return mRenderer.getDuration();
-
     }
 
     public boolean GetInited() {
@@ -78,7 +75,6 @@ public class VideoView extends GLSurfaceView {
 
     public long getCurrentPosition() {
         return mRenderer.getCurrentPosition();
-
     }
 
     public void SetVrMode(boolean istrue) {
@@ -91,6 +87,7 @@ public class VideoView extends GLSurfaceView {
 
         private boolean isFrameBufferInited = false;
         private int mWidth, mHeight;
+        private int fbs;
 
         IntBuffer texture = IntBuffer.allocate(1);
         IntBuffer framebuffer = IntBuffer.allocate(1);
@@ -336,7 +333,6 @@ public class VideoView extends GLSurfaceView {
                 return mMediaPlayer.getDuration();
             else
                 return 0;
-
         }
 
         public int getCurrentPosition() {
@@ -344,7 +340,6 @@ public class VideoView extends GLSurfaceView {
                 return mMediaPlayer.getCurrentPosition();
             else
                 return 0;
-
         }
 
         public void SetPara(Handler handel, ArrayList<String> playlist, int index) {
@@ -363,12 +358,21 @@ public class VideoView extends GLSurfaceView {
             Matrix.setIdentityM(mSTMatrix, 0);
         }
 
-
         /**
          * Called to draw the current frame.
          * This method is responsible for drawing the current frame.
          */
         public void onDrawFrame(GL10 glUnused) {
+
+            if (fbs < 4) {
+                synchronized (this) {
+                    if (updateSurface) {
+                        mSurface.updateTexImage();
+                        mSurface.getTransformMatrix(mSTMatrix);
+                        updateSurface = false;
+                    }
+                }
+            }
 
             // Initial clear.
             GLES20.glClearColor(0.0f, 1.0f, 0.0f, 1.0f);
@@ -380,7 +384,6 @@ public class VideoView extends GLSurfaceView {
 
                 GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
                 GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, texture3.get(0));
-
 
                 mTriangleVertices.position(TRIANGLE_VERTICES_DATA_UV_OFFSET);
                 GLES20.glVertexAttribPointer(maRightTextureHandle, 2, GLES20.GL_FLOAT, false,
@@ -394,6 +397,29 @@ public class VideoView extends GLSurfaceView {
                 GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
 
                 drawFrameBuffer();
+                if (fbs < 4) {
+                    GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0);
+                    GLES20.glUseProgram(mProgram);
+
+                    GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
+                    GLES20.glBindTexture(GL_TEXTURE_EXTERNAL_OES, mTextureID);
+
+                    Matrix.setIdentityM(mMVPMatrix, 0);
+                    GLES20.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, mMVPMatrix, 0);
+                    GLES20.glUniformMatrix4fv(muSTMatrixHandle, 1, false, mSTMatrix, 0);
+
+                    mTriangleVertices.position(TRIANGLE_VERTICES_DATA_UV_OFFSET);
+                    GLES20.glVertexAttribPointer(maRightTextureHandle, 2, GLES20.GL_FLOAT, false,
+                            TRIANGLE_VERTICES_DATA_STRIDE_BYTES, mTriangleVertices);
+                    GLES20.glEnableVertexAttribArray(maRightTextureHandle);
+
+                    mTriangleVertices.position(TRIANGLE_VERTICES_DATA_RIGHT_OFFSET);
+                    GLES20.glVertexAttribPointer(maRightPositionHandle, 2, GLES20.GL_FLOAT, false,
+                            TRIANGLE_VERTICES_DATA_STRIDE_BYTES, mTriangleVertices);
+                    GLES20.glEnableVertexAttribArray(maRightPositionHandle);
+                    GLES20.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
+                    fbs++;
+                }
             }
 
             // Load the program, which is the basics rules to draw the vertexes and textures.
@@ -427,11 +453,13 @@ public class VideoView extends GLSurfaceView {
             GLES20.glUniformMatrix4fv(muSTMatrixHandle, 1, false, mSTMatrix, 0);
 
             // Draw a rectangle and render the video frame as a texture on it.
-            synchronized (this) {
-                if (updateSurface) {
-                    mSurface.updateTexImage();
-                    mSurface.getTransformMatrix(mSTMatrix);
-                    updateSurface = false;
+            if (fbs >= 4) {
+                synchronized (this) {
+                    if (updateSurface) {
+                        mSurface.updateTexImage();
+                        mSurface.getTransformMatrix(mSTMatrix);
+                        updateSurface = false;
+                    }
                 }
             }
 
@@ -447,6 +475,7 @@ public class VideoView extends GLSurfaceView {
 
             checkGlError("glDrawArrays");
             GLES20.glFinish();
+
         }
 
 
@@ -469,7 +498,7 @@ public class VideoView extends GLSurfaceView {
             //GLES20.glGetIntegerv(GLES20.GL_RED_BITS, bpp, 0);
             //GLES20.glGetIntegerv(GLES20.GL_GREEN_BITS, bpp, 1);
             //GLES20.glGetIntegerv(GLES20.GL_BLUE_BITS, bpp, 2);
-
+            fbs = 0;
             GLES20.glViewport(0, 0, width, height);
             mWidth = width;
             mHeight = height;

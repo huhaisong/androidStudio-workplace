@@ -12,7 +12,7 @@ public class MatrixState {
     private static float[] mVMatrix = new float[16];
     private static float[] currMatrix;
     public static float[] lightLocationSun = new float[]{0, 0, 0};
-   public static FloatBuffer cameraFB;
+    public static FloatBuffer cameraFB;
     public static FloatBuffer lightPositionFBSun;
 
     public static Stack<float[]> mStack = new Stack<float[]>();
@@ -37,7 +37,7 @@ public class MatrixState {
     }
 
     //旋转
-    public static void rotate(float angle, float x, float y, float z)    {
+    public static void rotate(float angle, float x, float y, float z) {
         Matrix.rotateM(currMatrix, 0, angle, x, y, z);
     }
 
@@ -51,9 +51,9 @@ public class MatrixState {
 
         ByteBuffer llbb = ByteBuffer.allocateDirect(3 * 4);
         llbb.order(ByteOrder.nativeOrder());
-      cameraFB = llbb.asFloatBuffer();
-      cameraFB.put(cameraLocation);
-      cameraFB.position(0);
+        cameraFB = llbb.asFloatBuffer();
+        cameraFB.put(cameraLocation);
+        cameraFB.position(0);
     }
 
     //透视投影
@@ -85,8 +85,8 @@ public class MatrixState {
         lightLocationSun[2] = z;
         ByteBuffer llbb = ByteBuffer.allocateDirect(3 * 4);
         llbb.order(ByteOrder.nativeOrder());
-    lightPositionFBSun = llbb.asFloatBuffer();
-      lightPositionFBSun.put(lightLocationSun);
-    lightPositionFBSun.position(0);
+        lightPositionFBSun = llbb.asFloatBuffer();
+        lightPositionFBSun.put(lightLocationSun);
+        lightPositionFBSun.position(0);
     }
 }

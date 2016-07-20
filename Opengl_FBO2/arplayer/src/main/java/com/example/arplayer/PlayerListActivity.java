@@ -170,13 +170,10 @@ public class PlayerListActivity extends Activity {
 				bundle.putInt("index", position);
 				intent.putExtra("playlist", bundle);
 				// intent.putExtra("PlayPath",mPlayList.get(position).Path);
-
 				PlayerListActivity.this.startActivity(intent);
-
 			}
 
 		});
-
 	}
 
 	private String getSize(long size) {
@@ -205,12 +202,10 @@ public class PlayerListActivity extends Activity {
 
 		if (isVideo) {
 			mCursor = mContentResolver.query(
-					MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null,
-					null, null);
+					MediaStore.Video.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
 		} else {
 			mCursor = mContentResolver.query(
-					MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null,
-					null, null);
+					MediaStore.Images.Media.EXTERNAL_CONTENT_URI, null, null, null, null);
 		}
 		
 		mCursor.moveToFirst();

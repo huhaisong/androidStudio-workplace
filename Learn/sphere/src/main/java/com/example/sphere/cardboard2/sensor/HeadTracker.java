@@ -183,7 +183,6 @@ public class HeadTracker implements SensorEventListener {
 
             Matrix.multiplyMM(this.tmpHeadView, 0, this.neckModelTranslation, 0, headView, offset);
             Matrix.translateM(headView, offset, this.tmpHeadView, 0, 0.0F, 1.0F * 0.075F, 0.0F);
-
         }
     }
 }

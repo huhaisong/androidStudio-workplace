@@ -52,16 +52,13 @@ public class VideoView360 extends VRGLSurfaceView {
 
         setEGLContextClientVersion(2);
         setEGLConfigChooser(8, 8, 8, 8, 16, 0);
-
         mRenderer = new VideoRender(context);
         setRenderer(mRenderer);
-
     }
 
     public VideoView360(Context context, AttributeSet attrs) {
         super(context, attrs);
         setEGLContextClientVersion(2);
-
         mRenderer = new VideoRender(context);
         setRenderer(mRenderer);
     }
@@ -72,12 +69,10 @@ public class VideoView360 extends VRGLSurfaceView {
 
     public void onPause() {
         super.onPause();
-
     }
 
     public void onResume() {
         super.onResume();
-
     }
 
     public void pause() {
@@ -206,7 +201,6 @@ public class VideoView360 extends VRGLSurfaceView {
 
         public boolean GetInited() {
             return Inited;
-
         }
 
         public void seekTo(int seek) {
@@ -219,7 +213,6 @@ public class VideoView360 extends VRGLSurfaceView {
                 return mMediaPlayer.getDuration();
             else
                 return 0;
-
         }
 
         public int getCurrentPosition() {
@@ -420,7 +413,6 @@ public class VideoView360 extends VRGLSurfaceView {
             Matrix.multiplyMM(temp, 0, t, 0, mHeadTransform.getHeadView(), 0);
             //System.arraycopy(temp, 0, projectionMatrix, 0, temp.length);
             GLES20.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, temp, 0);
-
         }
 
 
@@ -558,7 +550,6 @@ public class VideoView360 extends VRGLSurfaceView {
                         0, baktextureBuffer);
 
                 GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, temp, 0);
-
                 GLES20.glDrawArrays(GLES20.GL_TRIANGLE_FAN, 0, 4);
 
             }
@@ -695,6 +686,7 @@ public class VideoView360 extends VRGLSurfaceView {
         private int attribTexCoord;
 
         public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
+
 
             /* Set up shaders and handles to their variables */
             mProgram = createProgram(mVertexShader, mFragmentShader);

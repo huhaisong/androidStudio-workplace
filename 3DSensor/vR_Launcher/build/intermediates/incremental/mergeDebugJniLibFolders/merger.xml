@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="D:\Users\huhaisong\androidStudio-workplace\3DSensor\vR_Launcher\src\main\jniLibs"><file name="armeabi-v7a/libvrtoolkit.so" path="D:\Users\huhaisong\androidStudio-workplace\3DSensor\vR_Launcher\src\main\jniLibs\armeabi-v7a\libvrtoolkit.so"/></source></dataSet><dataSet config="debug"><source path="D:\Users\huhaisong\androidStudio-workplace\3DSensor\vR_Launcher\src\debug\jniLibs"/></dataSet></merger>

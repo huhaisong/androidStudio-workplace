@@ -7,7 +7,6 @@ import com.threed.jpct.util.BitmapHelper;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.provider.MediaStore;
@@ -83,11 +82,9 @@ public class VRListImg {
                 mBmpbj = BitmapHelper.loadImage(mContext.getAssets().open(Name));
             } catch (IOException e) {
                 // TODO Auto-generated catch block
-                //Log.e("AR110","SetList mBmpbj=eeee");
                 e.printStackTrace();
             } catch (Exception e) {
                 // TODO Auto-generated catch block
-                //Log.e("AR110","SetList mBmpbj=eeee");
                 e.printStackTrace();
             }
             //	Log.e("AR110","SetList mBmpbj="+mBmpbj);
@@ -100,17 +97,13 @@ public class VRListImg {
                 PageCount++;
             }
         }
-        if (menuid == 3) {
-            mIsGame = true;
-        } else {
-            mIsGame = false;
-        }
+        mIsGame = menuid == 3;
     }
 
     public int GetPageSize() {
         if (mList == null)
             return 0;
-        int Index = Page * PageSize + 0;
+        int Index = Page * PageSize;
         int pagesize = mList.size() - Index;
         if (pagesize < 0)
             pagesize = 0;
@@ -120,9 +113,9 @@ public class VRListImg {
     }
 
     public void Draw() {
-        if (mBmpbj == null)
+        if (mBmpbj == null) {
             return;
-
+        }
         int BoxWidth = 160;
         int BoxHeight = 112;
         int SUBWIDTH = 152;
@@ -133,26 +126,25 @@ public class VRListImg {
             mBitmap.recycle();
             mBitmap = null;
         }
-        if (mBitmap == null) {
+        //if (mBitmap == null)
+        {
             mBitmap = Bitmap.createBitmap(mBmpbj.getWidth(), mBmpbj.getHeight(),
                     Bitmap.Config.ARGB_8888);
         }
-
         mDrid++;
         if (mDrid > 100)
             mDrid = 0;
         Canvas canvas = new Canvas(mBitmap);
         canvas.drawBitmap(mBmpbj, 0, 0, null);
         if (mList != null) {
-            int Index = Page * PageSize + 0;
+            int Index = Page * PageSize;
             int i = 0;
-            while (i < PageSize && Index < mList.size()) {
+            while (i < PageSize && Index < mList.size()) {//画每一个item
                 ListItem item = mList.get(Index);
-
                 if (item != null) {
                     long id = item.ThumbnailId;
-                    Bitmap bitmap = null;
-                    if (mIsGame) {
+                    Bitmap bitmap;
+                    if (mIsGame) {//是否是游戏
                         bitmap = null;
                         try {
                             bitmap = BitmapHelper.loadImage(mContext.getAssets().open(item.Path));
@@ -165,18 +157,24 @@ public class VRListImg {
                         }
                     } else {
                         if (item.IsVideo)
-                            bitmap = MediaStore.Video.Thumbnails.getThumbnail(mContext.getContentResolver(), id, Thumbnails.MICRO_KIND, null);
+                            bitmap = MediaStore.Video.Thumbnails.getThumbnail(
+                                    mContext.getContentResolver(), id, Thumbnails.MICRO_KIND, null);
                         else
-                            bitmap = MediaStore.Images.Thumbnails.getThumbnail(mContext.getContentResolver(), id, Thumbnails.MICRO_KIND, null);
+                            bitmap = MediaStore.Images.Thumbnails.getThumbnail(
+                                    mContext.getContentResolver(), id, Thumbnails.MICRO_KIND, null);
                     }
                     if (bitmap != null) {
                         //canvas.drawBitmap(bitmap, 0, 0, null);
                         int left = LEFT + (i % RowNum) * (BoxWidth);
                         int top = TOP + (i / RowNum) * (BoxHeight);
 
-                        canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(left, top, left + SUBWIDTH, top + SUBHEIGHT), null);
+                        //画视频的缩略图或者画图片的缩略图或者游戏的缩略图
+                        canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(),
+                                        bitmap.getHeight()),
+                                new Rect(left, top, left + SUBWIDTH, top + SUBHEIGHT), null);
 
                         bitmap.recycle();
+                        //如果是视频，画一个播放按钮
                         if (item.IsVideo) {
                             Bitmap videobitmap = null;
                             try {
@@ -196,7 +194,7 @@ public class VRListImg {
                             }
                         }
                     } else {
-                        //  Log.e("ar110","null id="+id);
+                        Log.e("ar110", "null id=" + id);
                     }
                 }
                 i++;
@@ -207,11 +205,11 @@ public class VRListImg {
             mHotBitmap.recycle();
             mHotBitmap = null;
         }
-        if (mHotBitmap == null) {
+        //if (mHotBitmap == null)
+        {
             mHotBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(),
                     Bitmap.Config.ARGB_8888);
         }
-
         mDrid++;
         if (mDrid > 100)
             mDrid = 0;
@@ -219,5 +217,4 @@ public class VRListImg {
         hotcanvas.drawBitmap(mBitmap, 0, 0, null);
         hotcanvas.drawBitmap(mBmpHotbj, 0, 0, null);
     }
-
 }

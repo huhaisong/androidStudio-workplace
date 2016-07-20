@@ -82,7 +82,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 while (true) {
                     b = false;
                     try {
-                        Thread.currentThread().sleep(30);
+                        Thread.currentThread().sleep(16);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -90,7 +90,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     for (int i = 0; i < 16; i++) {
                         float d = newheadView[i] - oldheadView[i];
                         if (Math.abs(d) > 0.01) {
-                            Log.i("aaaaa", "run: Math.abs(d):" + Math.abs(d) + "\nd:" + d);
+                            Log.i("aaaaa", "run: Math.abs(d):" + Math.abs(d) );
                             b = true;
                             break;
                         }
@@ -199,7 +199,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
                     int texIndex = (i * (numSlices + 1) + j) * 2;
                     texCoords[texIndex] = 1.0f - (float) j / (float) numSlices;
-                    texCoords[texIndex + 1] = ((float) i / (float) numParallels) / 2;//((float)i/(float)numParallels);//
+                    texCoords[texIndex + 1] = ((float) i / (float) numParallels) ;//((float)i/(float)numParallels);//
 
                     texRightCoords[texIndex] = 1.0f - (float) j / (float) numSlices;
                     texRightCoords[texIndex + 1] = ((float) i / (float) numParallels) / 2 + 0.5f;
@@ -245,7 +245,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
             GLES20.glEnable(GLES20.GL_DEPTH_TEST);
             GLES20.glDisable(GLES20.GL_CULL_FACE);
             initTexture();
-
             //调用此方法产生摄像机9参数位置矩阵
             Matrix.setLookAtM(mVMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
         }
@@ -263,6 +262,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
             int count = esGenSphere(100, 100);
             //清除深度缓冲与颜色缓冲
             GLES20.glClear(GLES20.GL_DEPTH_BUFFER_BIT | GLES20.GL_COLOR_BUFFER_BIT);
+
             GLES20.glUseProgram(mProgram);
             GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, temp, 0);
             GLES20.glVertexAttribPointer(maPositionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
@@ -271,10 +271,10 @@ public class MyGLSurfaceView extends GLSurfaceView {
             GLES20.glEnableVertexAttribArray(maTexCoorHandle);
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
-            GLES20.glViewport(0, 0, mWidth / 2, mHeight);
+            GLES20.glViewport(0, 0, mWidth , mHeight);
             GLES20.glDrawElements(GLES20.GL_TRIANGLES, count, GLES20.GL_UNSIGNED_SHORT, IndicesBuffer);
 
-            //设置视窗大小及位置
+          /*  //设置视窗大小及位置
             GLES20.glViewport(mWidth / 2, 0, mWidth / 2, mHeight);
             GLES20.glUseProgram(mProgram);
             GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, temp, 0);
@@ -284,7 +284,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
             GLES20.glEnableVertexAttribArray(maTexCoorHandle);
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
-            GLES20.glDrawElements(GLES20.GL_TRIANGLES, count, GLES20.GL_UNSIGNED_SHORT, IndicesBuffer);
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, count, GLES20.GL_UNSIGNED_SHORT, IndicesBuffer);*/
         }
 
         public void update() {

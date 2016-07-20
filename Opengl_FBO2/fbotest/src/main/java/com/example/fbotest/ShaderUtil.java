@@ -44,26 +44,21 @@ public class ShaderUtil {
         if (vertexShader == 0) {
             return 0;
         }
-
         //加载片元着色器
         int pixelShader = loadShader(GLES20.GL_FRAGMENT_SHADER, fragmentSource);
         if (pixelShader == 0) {
             return 0;
         }
-
         //创建程序
         int program = GLES20.glCreateProgram();
-
-        Log.i("aa", "createProgram: vertexShader" + vertexShader + "pixelShader" + pixelShader + "program" + program);
-
         //若程序创建成功则向程序中加入顶点着色器与片元着色器
         if (program != 0) {
             //向程序中加入顶点着色器
             GLES20.glAttachShader(program, vertexShader);
-            checkGlError("glAttachShader");
+            checkGlError("glAttachVertexShaderShader");
             //向程序中加入片元着色器
             GLES20.glAttachShader(program, pixelShader);
-            checkGlError("glAttachShader");
+            checkGlError("glAttachPixelShaderShader");
             //链接程序
             GLES20.glLinkProgram(program);
             //存放链接成功program数量的数组
@@ -86,7 +81,7 @@ public class ShaderUtil {
         int error;
         while ((error = GLES20.glGetError()) != GLES20.GL_NO_ERROR) {
             Log.e("ES20_ERROR", op + ": glError " + error);
-           // throw new RuntimeException(op + ": glError " + error);
+            throw new RuntimeException(op + ": glError " + error);
         }
     }
 

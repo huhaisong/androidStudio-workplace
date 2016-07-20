@@ -142,7 +142,6 @@ public class VRImageView extends View {
 
     public int mTop = 120;
 
-
     @SuppressLint("DrawAllocation")
     @Override
     protected void onDraw(Canvas canvas) {

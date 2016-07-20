@@ -1,34 +1,21 @@
 package com.example.loadbyengine;
 
 import android.os.Bundle;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.egl.EGLDisplay;
 import javax.microedition.khronos.opengles.GL10;
 import android.app.Activity;
-import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.opengl.GLSurfaceView;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.FloatMath;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.threed.jpct.Camera;
 import com.threed.jpct.FrameBuffer;
@@ -41,7 +28,6 @@ import com.threed.jpct.SimpleVector;
 import com.threed.jpct.Texture;
 import com.threed.jpct.TextureManager;
 import com.threed.jpct.World;
-import com.threed.jpct.util.BitmapHelper;
 import com.threed.jpct.util.MemoryHelper;
 
 /**
@@ -57,7 +43,6 @@ public class MainActivity extends Activity {
     private static MainActivity master = null;
 
     private GLSurfaceView mGLView;
-    private MyRenderer renderer = null;
     private FrameBuffer fb = null;
     private World world = null;
     private RGBColor back = new RGBColor(50, 50, 100);
@@ -76,7 +61,8 @@ public class MainActivity extends Activity {
     private Object3D model = null;
     private int fps = 0;
 
-    private Light sun = null;
+
+    private static final String TAG = "MainActivity";
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -87,7 +73,7 @@ public class MainActivity extends Activity {
         }
 
         super.onCreate(savedInstanceState);
-        mGLView = new GLSurfaceView(getApplication());
+        mGLView = new GLSurfaceView(this);
 
         mGLView.setEGLConfigChooser(new GLSurfaceView.EGLConfigChooser() {
             public EGLConfig chooseConfig(EGL10 egl, EGLDisplay display) {
@@ -96,10 +82,13 @@ public class MainActivity extends Activity {
                 int[] result = new int[1];
                 egl.eglChooseConfig(display, attributes, configs, 1, result);
                 return configs[0];
+
             }
         });
 
-        renderer = new MyRenderer();
+       // mGLView.setEGLContextClientVersion(2);
+
+        MyRenderer renderer = new MyRenderer();
         mGLView.setRenderer(renderer);
         setContentView(mGLView);
     }
@@ -195,6 +184,8 @@ public class MainActivity extends Activity {
     class MyRenderer implements GLSurfaceView.Renderer {
 
         private long time = System.currentTimeMillis();
+        private Light sun ;
+
 
         public MyRenderer() {
         }
@@ -226,14 +217,15 @@ public class MainActivity extends Activity {
                             mtlstream = getAssets().open(file);
                         } else if(isImage(file)){
                             Bitmap bitmap = BitmapFactory.decodeStream(getAssets().open(file));
-                            int scaleWidth = -1;
+                          /*  int scaleWidth = -1;
                             int scaleHeight = -1;
                             if(!isPowerOf2(bitmap.getHeight()) || !isPowerOf2(bitmap.getWidth())){
                                 scaleWidth = nextPowerOf2(bitmap.getWidth());
                                 scaleHeight = nextPowerOf2(bitmap.getHeight());
                             }
-                            bitmap = BitmapHelper.rescale(bitmap, scaleWidth, scaleHeight);
+                            //bitmap = BitmapHelper.rescale(bitmap, scaleWidth, scaleHeight);*/
                             Texture texture = new Texture(bitmap);
+                            Log.i(TAG, "onSurfaceChanged: file:"+file);
                             TextureManager.getInstance().addTexture(file, texture);
                         }
                     }
@@ -244,7 +236,9 @@ public class MainActivity extends Activity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                model = Object3D.mergeAll(objs);
+                if (objs != null) {
+                    model = Object3D.mergeAll(objs);
+                }
                 model.strip();
                 model.build();
 
@@ -254,13 +248,13 @@ public class MainActivity extends Activity {
                 cam.moveCamera(Camera.CAMERA_MOVEOUT, 50);
                 cam.lookAt(model.getTransformedCenter());
 
+                //设置光源点
                 SimpleVector sv = new SimpleVector();
                 sv.set(model.getTransformedCenter());
                 sv.y -= 100;
                 sv.z -= 100;
                 sun.setPosition(sv);
                 MemoryHelper.compact();
-
                 if (master == null) {
                     Logger.log("Saving master Activity!");
                     master = MainActivity.this;
@@ -301,15 +295,17 @@ public class MainActivity extends Activity {
         }
 
         public boolean isImage(String file){
-            if(file.toLowerCase().endsWith(".bmp") ||
-                    file.toLowerCase().endsWith(".jpg") ||
-                    file.toLowerCase().endsWith(".png")){
-                return true;
+            if (file != null) {
+                if(file.toLowerCase().endsWith(".bmp") ||
+                        file.toLowerCase().endsWith(".jpg") ||
+                        file.toLowerCase().endsWith(".png")){
+                    return true;
+                }
             }
             return false;
         }
 
-        public  boolean isPowerOf2(int n) {
+    /*    public  boolean isPowerOf2(int n) {
             return ((n & -n) == n);
         }
 
@@ -321,6 +317,6 @@ public class MainActivity extends Activity {
             n |= n >>> 2;
             n |= n >>> 1;
             return (n + 1);
-        }
+        }*/
     }
 }

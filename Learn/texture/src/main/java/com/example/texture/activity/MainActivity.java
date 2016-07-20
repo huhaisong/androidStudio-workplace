@@ -16,18 +16,18 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //设置为全屏
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+     /*   requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);*/
         //设置为竖屏模式
-       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+       //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         //切换到主界面
 
         //初始化GLSurfaceView
         mGLSurfaceView = new MySurfaceView(this);
         setContentView(mGLSurfaceView);
-        mGLSurfaceView.requestFocus();//获取焦点
-        mGLSurfaceView.setFocusableInTouchMode(true);//设置为可触控
+       // mGLSurfaceView.requestFocus();//获取焦点
+        //mGLSurfaceView.setFocusableInTouchMode(true);//设置为可触控
     }
 
 }

@@ -4,6 +4,5 @@ varying vec2 v_TexCoordinate;   // This will be passed into the fragment shader.
 void main()
 {
     v_TexCoordinate = a_TexCoordinate;
-
     gl_Position = vec4(a_Position,1);
 }

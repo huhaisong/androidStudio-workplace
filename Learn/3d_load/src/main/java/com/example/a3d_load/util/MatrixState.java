@@ -18,13 +18,13 @@ public class MatrixState
     
     public static Stack<float[]> mStack=new Stack<float[]>();//�����任�����ջ
     
-    public static void setInitStack()//��ȡ���任��ʼ����
+    public static void setInitStack()
     {
     	currMatrix=new float[16];
     	Matrix.setRotateM(currMatrix, 0, 0, 1, 0, 0);
     }
     
-    public static void pushMatrix()//�����任����
+    public static void pushMatrix()
     {
     	mStack.push(currMatrix.clone());
     }

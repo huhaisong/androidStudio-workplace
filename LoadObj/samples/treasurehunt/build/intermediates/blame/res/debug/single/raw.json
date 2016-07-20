@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\LoadObj\\samples\\treasurehunt\\build\\intermediates\\res\\merged\\debug\\raw\\grid_fragment.shader",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\LoadObj\\samples\\treasurehunt\\src\\main\\res\\raw\\grid_fragment.shader"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\LoadObj\\samples\\treasurehunt\\build\\intermediates\\res\\merged\\debug\\raw\\passthrough_fragment.shader",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\LoadObj\\samples\\treasurehunt\\src\\main\\res\\raw\\passthrough_fragment.shader"
+    },
+    {
+        "merged": "D:\\Users\\huhaisong\\androidStudio-workplace\\LoadObj\\samples\\treasurehunt\\build\\intermediates\\res\\merged\\debug\\raw\\light_vertex.shader",
+        "source": "D:\\Users\\huhaisong\\androidStudio-workplace\\LoadObj\\samples\\treasurehunt\\src\\main\\res\\raw\\light_vertex.shader"
+    }
+]

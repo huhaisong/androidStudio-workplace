@@ -15,18 +15,23 @@ import android.graphics.BitmapFactory;
 import com.example.texture.model.TextureRect;
 import com.example.texture.util.MatrixState;
 
+import java.io.IOException;
+
 public class MySurfaceView extends GLSurfaceView {
 
     private SceneRenderer mRenderer;//场景渲染器
+    private Context mContext;
 
     int textureId;//系统分配的纹理id
 
     public MySurfaceView(Context context) {
         super(context);
+        mContext = context;
         this.setEGLContextClientVersion(2); //设置使用OPENGL ES2.0
         mRenderer = new SceneRenderer();    //创建场景渲染器
         setRenderer(mRenderer);                //设置渲染器
     }
+
 
     private class SceneRenderer implements GLSurfaceView.Renderer {
         TextureRect texRect;//纹理矩形
@@ -42,11 +47,11 @@ public class MySurfaceView extends GLSurfaceView {
             //设置视窗大小及位置
             GLES20.glViewport(0, 0, width, height);
             //计算GLSurfaceView的宽高比
-            float ratio = (float) width / height;
+            //float ratio = (float) width / height;
             //调用此方法计算产生透视投影矩阵
-            MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 1, 10);
+            //MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 1, 10);
             //调用此方法产生摄像机9参数位置矩阵
-            MatrixState.setCamera(0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+            //MatrixState.setCamera(0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -79,7 +84,12 @@ public class MySurfaceView extends GLSurfaceView {
         GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
         GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
 
-        Bitmap bitmapTmp = BitmapFactory.decodeResource(getResources(), R.drawable.wall);
+        Bitmap bitmapTmp = null;
+        try {
+            bitmapTmp = BitmapFactory.decodeStream(mContext.getAssets().open("rock_004_c.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         //实际加载纹理
         GLUtils.texImage2D

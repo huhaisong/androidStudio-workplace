@@ -16,12 +16,7 @@ import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
 import android.opengl.Matrix;
-
-    /*    // cleanup
-        GLES20.glDeleteRenderbuffers(1, depthRenderbuffer);
-        GLES20.glDeleteFramebuffers(1, framebuffer);
-        GLES20.glDeleteTextures(1, texture);*/
-
+import android.util.Log;
 
 /**
  * This class implements our custom renderer. Note that the GL10 parameter passed in is unused for OpenGL ES 2.0
@@ -40,7 +35,6 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
      */
     private final FloatBuffer mCubePositions;
     private final FloatBuffer mCubeTextureCoordinates;
-
 
     /**
      * This will be used to pass in the texture.
@@ -96,7 +90,7 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
     IntBuffer depthRenderbuffer = IntBuffer.allocate(1);
     private int mFrameBufferProgrameHandle;
     private int mFrameBufferTextureUniformHandle,mFrameBufferPositionHandle,mFrameBufferTextureCoordinateHandle;
-
+    private int mWidth,mHeight;
 
     /**
      * Initialize the model data.
@@ -121,46 +115,6 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
                         -1.0f, -1.0f, 0.0f,
                         1.0f, -1.0f, 0.0f,
                         1.0f, 1.0f, 0.0f,
-
-                        // Right face
-                        1.0f, 1.0f, 1.0f,
-                        1.0f, -1.0f, 1.0f,
-                        1.0f, 1.0f, -1.0f,
-                        1.0f, -1.0f, 1.0f,
-                        1.0f, -1.0f, -1.0f,
-                        1.0f, 1.0f, -1.0f,
-
-                        // Back face
-                        1.0f, 1.0f, -1.0f,
-                        1.0f, -1.0f, -1.0f,
-                        -1.0f, 1.0f, -1.0f,
-                        1.0f, -1.0f, -1.0f,
-                        -1.0f, -1.0f, -1.0f,
-                        -1.0f, 1.0f, -1.0f,
-
-                        // Left face
-                        -1.0f, 1.0f, -1.0f,
-                        -1.0f, -1.0f, -1.0f,
-                        -1.0f, 1.0f, 1.0f,
-                        -1.0f, -1.0f, -1.0f,
-                        -1.0f, -1.0f, 1.0f,
-                        -1.0f, 1.0f, 1.0f,
-
-                        // Top face
-                        -1.0f, 1.0f, -1.0f,
-                        -1.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, -1.0f,
-                        -1.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, 1.0f,
-                        1.0f, 1.0f, -1.0f,
-
-                        // Bottom face
-                        1.0f, -1.0f, -1.0f,
-                        1.0f, -1.0f, 1.0f,
-                        -1.0f, -1.0f, -1.0f,
-                        1.0f, -1.0f, 1.0f,
-                        -1.0f, -1.0f, 1.0f,
-                        -1.0f, -1.0f, -1.0f,
                 };
 
         // S, T (or X, Y)
@@ -178,74 +132,20 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
                         1.0f, 1.0f,
                         1.0f, 0.0f,
 
-                        // Right face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f,
-
-                        // Back face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f,
-
-                        // Left face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f,
-
-                        // Top face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f,
-
-                        // Bottom face
-                        0.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 0.0f,
-                        0.0f, 1.0f,
-                        1.0f, 1.0f,
-                        1.0f, 0.0f
                 };
 
         // Initialize the buffers.
         mCubePositions = MemUtil.makeFloatBuffer(cubePositionData);
-
-
         mCubeTextureCoordinates = MemUtil.makeFloatBuffer(cubeTextureCoordinateData);
     }
 
     @Override
     public void onSurfaceCreated(GL10 glUnused, EGLConfig config) {
-
-
         // Set the background clear color to black.
         GLES20.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
-        // Use culling to remove back faces.
         GLES20.glEnable(GLES20.GL_CULL_FACE);
-
-        // Enable depth testing
         GLES20.glEnable(GLES20.GL_DEPTH_TEST);
 
-        // The below glEnable() call is a holdover from OpenGL ES 1, and is not needed in OpenGL ES 2.
-        // Enable texture mapping
-        GLES20.glEnable(GLES20.GL_TEXTURE_2D);
-
-
-        initFrameBuffer();
-        initRect();
         // Load the texture
         mTextureDataHandle = initTexture(R.drawable.aa);
     }
@@ -254,7 +154,6 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
 
         final String vertexShader = ShaderUtil.loadFromAssetsFile("vertex.sh", mActivityContext.getResources());
         final String fragmentShader = ShaderUtil.loadFromAssetsFile("frag.sh", mActivityContext.getResources());
-
         mProgramHandle = ShaderUtil.createProgram(vertexShader, fragmentShader);
         // Set program handles for cube drawing.
         mTextureUniformHandle = GLES20.glGetUniformLocation(mProgramHandle, "u_Texture");
@@ -266,9 +165,14 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
 
         final String vertexFrameBufferShader = ShaderUtil.loadFromAssetsFile("vertex.sh", mActivityContext.getResources());
         final String fragmentFrameBufferShader = ShaderUtil.loadFromAssetsFile("frag.sh", mActivityContext.getResources());
+        Log.i(TAG, "initFrameBuffer: "+vertexFrameBufferShader);
         mFrameBufferProgrameHandle = ShaderUtil.createProgram(vertexFrameBufferShader,fragmentFrameBufferShader);
-        int texWidth = 480, texHeight = 480;
+        mFrameBufferTextureUniformHandle = GLES20.glGetUniformLocation(mFrameBufferProgrameHandle, "u_Texture");
+        mFrameBufferPositionHandle = GLES20.glGetAttribLocation(mFrameBufferProgrameHandle, "a_Position");
+        mFrameBufferTextureCoordinateHandle = GLES20.glGetAttribLocation(mFrameBufferProgrameHandle, "a_TexCoordinate");
 
+        int texWidth = mWidth;
+        int texHeight = mHeight;
         // generate the framebuffer, renderbuffer, and texture object names
         GLES20.glGenFramebuffers(1, framebuffer);
         GLES20.glGenRenderbuffers(1, depthRenderbuffer);
@@ -295,18 +199,18 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
         // specify depth_renderbufer as depth attachment
         GLES20.glFramebufferRenderbuffer(GLES20.GL_FRAMEBUFFER, GLES20.GL_DEPTH_ATTACHMENT,
                 GLES20.GL_RENDERBUFFER, depthRenderbuffer.get(0));
-
-        // Set program handles for cube drawing.
-        mFrameBufferTextureUniformHandle = GLES20.glGetUniformLocation(mFrameBufferProgrameHandle, "u_Texture");
-        mFrameBufferPositionHandle = GLES20.glGetAttribLocation(mFrameBufferProgrameHandle, "a_Position");
-        mFrameBufferTextureCoordinateHandle = GLES20.glGetAttribLocation(mFrameBufferProgrameHandle, "a_TexCoordinate");
-
     }
 
     @Override
     public void onSurfaceChanged(GL10 glUnused, int width, int height) {
         // Set the OpenGL viewport to the same size as the surface.
         GLES20.glViewport(0, 0, width, height);
+        mHeight = height;
+        mWidth = width;
+        // Enable texture mapping
+        // GLES20.glEnable(GLES20.GL_TEXTURE_2D);
+        initFrameBuffer();
+        initRect();
     }
 
     @Override
@@ -323,19 +227,12 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
     public int initTexture(int drawableId)//textureId
     {
         int[] textures = new int[1];
-        GLES20.glGenTextures
-                (
-                        1,
-                        textures,
-                        0
-                );
+        GLES20.glGenTextures(1, textures, 0);
         int textureId = textures[0];
         GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
 
         GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
         GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-
-
         GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
         GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
 
@@ -350,13 +247,7 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
                 e.printStackTrace();
             }
         }
-        GLUtils.texImage2D
-                (
-                        GLES20.GL_TEXTURE_2D,   //�������ͣ���OpenGL ES�б���ΪGL10.GL_TEXTURE_2D
-                        0,                      //����Ĳ�Σ�0��ʾ��ͼ��㣬�������Ϊֱ����ͼ
-                        bitmapTmp,              //����ͼ��
-                        0                      //����߿�ߴ�
-                );
+        GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, bitmapTmp, 0);
         bitmapTmp.recycle();
         return textureId;
     }
@@ -365,12 +256,9 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
 
         // render to texture using FBO
         GLES20.glBindRenderbuffer(GLES20.GL_RENDERBUFFER, depthRenderbuffer.get(0));
-
         GLES20.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
-
         GLES20.glUseProgram(mFrameBufferProgrameHandle);
-
         // Set the active texture unit to texture unit 0.
         GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
 
@@ -383,13 +271,11 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
         // Pass in the position information
         mCubePositions.position(0);
         GLES20.glVertexAttribPointer(mFrameBufferPositionHandle, 3, GLES20.GL_FLOAT, false, 0, mCubePositions);
-
         GLES20.glEnableVertexAttribArray(mFrameBufferPositionHandle);
 
         // Pass in the texture coordinate information
         mCubeTextureCoordinates.position(0);
         GLES20.glVertexAttribPointer(mFrameBufferTextureCoordinateHandle, 2, GLES20.GL_FLOAT, false, 0, mCubeTextureCoordinates);
-
         GLES20.glEnableVertexAttribArray(mFrameBufferTextureCoordinateHandle);
 
         // Draw the cube.
@@ -417,17 +303,12 @@ public class Test7Renderer implements GLSurfaceView.Renderer {
         mCubePositions.position(0);
         GLES20.glVertexAttribPointer(mPositionHandle, mPositionDataSize, GLES20.GL_FLOAT, false,
                 0, mCubePositions);
-
         GLES20.glEnableVertexAttribArray(mPositionHandle);
-
         // Pass in the texture coordinate information
         mCubeTextureCoordinates.position(0);
-        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize, GLES20.GL_FLOAT, false,
-                0, mCubeTextureCoordinates);
-
+        GLES20.glVertexAttribPointer(mTextureCoordinateHandle, mTextureCoordinateDataSize,
+                GLES20.GL_FLOAT, false, 0, mCubeTextureCoordinates);
         GLES20.glEnableVertexAttribArray(mTextureCoordinateHandle);
-
-        // Draw the cube.
         GLES20.glDrawArrays(GLES20.GL_TRIANGLES, 0, 6);
     }
 }

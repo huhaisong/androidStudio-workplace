@@ -1,0 +1,32 @@
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+   // Default precision
+   precision highp float;
+#else
+   precision mediump float;
+#endif
+
+varying vec3 _v3PosVS;
+varying vec3 _v3NormalVS;
+varying vec2 _v2UV;
+varying vec3 _v3LightDirVS;
+
+const float Ka = 0.3;
+const float Kd = 0.7;
+const float Ks = 0.8;
+const float SpecularExp= 64.0;
+
+uniform sampler2D spDiffuse;
+void main(void)
+{
+   vec3 L,N,V,R;
+   L = normalize(-_v3LightDirVS);
+   N = normalize(_v3NormalVS);
+   V = normalize(-_v3PosVS);//the V is invView
+   R = reflect(-V,N);
+   vec3 c3AD = (Ka+Kd*clamp(dot(L,N),0.0,1.0))* texture2D(spDiffuse,_v2UV).xyz;
+   vec3 c3S = pow(clamp(dot(R,L),0.0,1.0),SpecularExp)*vec3(1,1,1);
+   
+   
+   gl_FragColor = vec4((c3AD+c3S),1);
+   
+}

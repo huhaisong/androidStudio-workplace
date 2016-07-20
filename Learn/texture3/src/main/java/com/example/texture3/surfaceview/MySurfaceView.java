@@ -105,7 +105,7 @@ public class MySurfaceView extends GLSurfaceView {
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             GLES20.glViewport(0, 0, width, height);
             ratio = (float) width / height;
-            MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 4f, 100);
+            MatrixState.setProjectFrustum(-ratio, ratio, -1, 1, 4f, 100);  //左右上下近远
             MatrixState.setCamera(0, 0, 7.2f, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
             GLES20.glEnable(GLES20.GL_CULL_FACE);
             textureIdEarth = initTexture(R.drawable.earth);
