@@ -1,1 +1,1 @@
-include ':app', ':loadbyengine', ':myapplication'
+include ':app', ':loadbyengine', ':myapplication', ':lines', ':lines2'
