@@ -132,7 +132,7 @@ public class VRGLSurfaceView extends MyGLSurfaceView {
         }
 
         public void onSurfaceCreated(GL10 gl, EGLConfig config) {
-           /* //设置屏幕背景色RGBA
+            //设置屏幕背景色RGBA
             GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             mVertexShader = ShaderUtil.loadFromAssetsFile("vertex.sh", getResources());
             mFragmentShader = ShaderUtil.loadFromAssetsFile("frag.sh", getResources());
@@ -145,7 +145,7 @@ public class VRGLSurfaceView extends MyGLSurfaceView {
             GLES20.glDisable(GLES20.GL_CULL_FACE);
             initTexture();
             //调用此方法产生摄像机9参数位置矩阵
-            android.opengl.Matrix.setLookAtM(mVMatrix, 0, 0, 0, 4, 0f, 0f, 0f, 0f, 1.0f, 0.0f);*/
+            android.opengl.Matrix.setLookAtM(mVMatrix, 0, 0, 0, 4, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
         }
 
         public void onSurfaceChanged(GL10 gl, int w, int h) {
@@ -203,7 +203,7 @@ public class VRGLSurfaceView extends MyGLSurfaceView {
                 model = Object3D.mergeAll(objs);
             }
             model.setCulling(false);
-            model.scale(2.0f);
+            //model.scale(2.0f);
             model.strip();
             model.build();
             model.rotateX(2.9f);
@@ -259,7 +259,6 @@ public class VRGLSurfaceView extends MyGLSurfaceView {
             GLES20.glViewport(0, 0, mWidth / 2, mHeight);
 
             world.draw(fb);
-/*
             update();
             GLES20.glUseProgram(mProgram);
             GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, temp, 0);
@@ -269,11 +268,11 @@ public class VRGLSurfaceView extends MyGLSurfaceView {
             GLES20.glEnableVertexAttribArray(maTexCoorHandle);
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
-            GLES20.glDrawElements(GLES20.GL_TRIANGLES, count, GLES20.GL_UNSIGNED_SHORT, IndicesBuffer);*/
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, count, GLES20.GL_UNSIGNED_SHORT, IndicesBuffer);
 
             GLES20.glViewport(mWidth / 2, 0, mWidth / 2, mHeight);
             world.draw(fb);
-           /* GLES20.glUseProgram(mProgram);
+            GLES20.glUseProgram(mProgram);
             GLES20.glUniformMatrix4fv(mMVPMatrixHandle, 1, false, temp, 0);
             GLES20.glVertexAttribPointer(maPositionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, vertexBuffer);
             GLES20.glVertexAttribPointer(maTexCoorHandle, 2, GLES20.GL_FLOAT, false, 2 * 4, textureBuffer);
@@ -281,7 +280,7 @@ public class VRGLSurfaceView extends MyGLSurfaceView {
             GLES20.glEnableVertexAttribArray(maTexCoorHandle);
             GLES20.glActiveTexture(GLES20.GL_TEXTURE0);
             GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
-            GLES20.glDrawElements(GLES20.GL_TRIANGLES, count, GLES20.GL_UNSIGNED_SHORT, IndicesBuffer);*/
+            GLES20.glDrawElements(GLES20.GL_TRIANGLES, count, GLES20.GL_UNSIGNED_SHORT, IndicesBuffer);
             fb.display();
 
             if (System.currentTimeMillis() - time >= 1000) {

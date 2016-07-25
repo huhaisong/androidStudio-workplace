@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lines/lines.iml" filepath="$PROJECT_DIR$/lines/lines.iml" />
       <module fileurl="file://$PROJECT_DIR$/lines2/lines2.iml" filepath="$PROJECT_DIR$/lines2/lines2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lines3/lines3.iml" filepath="$PROJECT_DIR$/lines3/lines3.iml" />
       <module fileurl="file://$PROJECT_DIR$/loadbyengine/loadbyengine.iml" filepath="$PROJECT_DIR$/loadbyengine/loadbyengine.iml" />
       <module fileurl="file://$PROJECT_DIR$/myapplication/myapplication.iml" filepath="$PROJECT_DIR$/myapplication/myapplication.iml" />
     </modules>

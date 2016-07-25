@@ -80,8 +80,6 @@ public class BluetoothActivity extends BaseActivity {
         mSearchLayout = (LinearLayout) findViewById(R.id.layout_search);
         mPairLayout = (LinearLayout) findViewById(R.id.layout_paired);
 
-
-
         mNewLayout = (LinearLayout) findViewById(R.id.layout_new);
         mNewListView = (ListView) findViewById(R.id.lv_new);
         mPairListView = (ListView) findViewById(R.id.lv_paired);
@@ -105,6 +103,7 @@ public class BluetoothActivity extends BaseActivity {
     }
 
     private void initClick() {
+
         mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -125,6 +124,7 @@ public class BluetoothActivity extends BaseActivity {
                 }
             }
         });
+
         mSearchLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -136,6 +136,7 @@ public class BluetoothActivity extends BaseActivity {
                 Toast.makeText(getBaseContext(), "正在搜索设备......", Toast.LENGTH_SHORT).show();
             }
         });
+
         mPairListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -143,7 +144,8 @@ public class BluetoothActivity extends BaseActivity {
                     mBluetoothAdapter.cancelDiscovery();
                 }
 
-                Toast.makeText(BluetoothActivity.this, "正在连接设备：" + mPairDatas.get(position), Toast.LENGTH_SHORT).show();
+                Toast.makeText(BluetoothActivity.this, "正在连接设备：" + mPairDatas.get(position),
+                        Toast.LENGTH_SHORT).show();
                 //开启子线程连接蓝牙设备
                 new Thread(new Runnable() {
                     @Override
@@ -159,6 +161,7 @@ public class BluetoothActivity extends BaseActivity {
                 }).start();
             }
         });
+
         mNewListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -189,11 +192,12 @@ public class BluetoothActivity extends BaseActivity {
 
     //蓝牙广播
     private class MyBroadcast extends BroadcastReceiver {
+
         @Override
         public void onReceive(Context context, Intent intent) {
             BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
             if (BluetoothAdapter.ACTION_STATE_CHANGED
-                    .equals(intent.getAction())) {
+                    .equals(intent.getAction())) {//蓝牙状态改变
                 Log.i("ACTION_STATE_CHANGED", "----------");
                 setPairListView();
             } else if (BluetoothDevice.ACTION_BOND_STATE_CHANGED
@@ -215,15 +219,15 @@ public class BluetoothActivity extends BaseActivity {
                     }
                 }
                 setPairListView();
-            } else if (BluetoothDevice.ACTION_FOUND.equals(intent.getAction())) {
+            } else if (BluetoothDevice.ACTION_FOUND.equals(intent.getAction())) {//搜索到设备
                 Log.i("ACTION_FOUND", "----------");
                 newDevices.add(device);
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
                     if (mNewDatas.size() > 0) {
                         boolean exist = false;
+                        Log.i("aaa", "onReceive: " + mNewDatas.toString());
                         for (String s : mNewDatas) {
                             if (s.equals(device.getName())) {
-
                                 exist = true;
                             }
                         }
@@ -235,16 +239,15 @@ public class BluetoothActivity extends BaseActivity {
                     }
                     setNewListView();
                 }
-            } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(intent.getAction())) {
+            } else if (BluetoothAdapter.ACTION_DISCOVERY_STARTED.equals(intent.getAction())) {//搜索状态改变
                 Log.i("DISCOVERY_STARTED", "----------");
                 mNewDatas.clear();
                 setNewListView();
             }
         }
-
     }
 
-    //设置配对蓝牙设备的list
+    //配对蓝牙设备的list
     private void setPairListView() {
         Log.i("setPairListView", "--------");
         mPairDatas.clear();
@@ -259,7 +262,7 @@ public class BluetoothActivity extends BaseActivity {
         }
     }
 
-    //设置可用蓝牙设备的list
+    //可用蓝牙设备的list
     private void setNewListView() {
         Log.i("setNewListView", "--------");
         mNewAdapter = new BluetoothListViewAdapter(false, getBaseContext(), mNewDatas);
@@ -267,7 +270,7 @@ public class BluetoothActivity extends BaseActivity {
         setListViewHeightBasedOnChildren(mNewListView);
     }
 
-    //设置listView的高度
+    //根据listView的item设置listView的高度
     private void setListViewHeightBasedOnChildren(ListView listView) {
         // 获取ListView对应的Adapter
         ListAdapter listAdapter = listView.getAdapter();

@@ -85,13 +85,23 @@ public class MyView extends View {
 
         Path path = new Path();
         path.reset();
-        path.moveTo(x1, y1);
         float xSpacing = Math.abs(x2 - x1) / count;
         float ySpacing = Math.abs(y2 - y1) / count;
         float x, y;
         float tx, ty;
         float r;
 
+        tx = x1 / width - 0.5f;
+        ty = y1 / height - 0.5f;
+
+        r = tx * tx + ty * ty;
+
+        tx = tx / (1 + K1 * r + K2 * r * r);
+        ty = ty / (1 + K1 * r + K2 * r * r);
+
+        x = (tx + 0.5f) * width;
+        y = (ty + 0.5f) * height;
+        path.moveTo(x, y);
 
         for (int i = 0; i < count; i++) {
             x = x1 + xSpacing * i;
