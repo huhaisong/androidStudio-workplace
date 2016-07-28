@@ -121,8 +121,7 @@ public class DeviceControlActivity extends Activity {
         getActionBar().setTitle(mDeviceName);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-        boolean bll = bindService(gattServiceIntent, mServiceConnection,
-                BIND_AUTO_CREATE);
+        boolean bll = bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
         if (bll) {
             System.out.println("---------------");
         } else {
@@ -228,7 +227,6 @@ public class DeviceControlActivity extends Activity {
             }
         }
     }
-
     /**
      *
      * @return
@@ -237,8 +235,7 @@ public class DeviceControlActivity extends Activity {
         final IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_CONNECTED);
         intentFilter.addAction(BluetoothLeService.ACTION_GATT_DISCONNECTED);
-        intentFilter
-                .addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
+        intentFilter.addAction(BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED);
         intentFilter.addAction(BluetoothLeService.ACTION_DATA_AVAILABLE);
         intentFilter.addAction(BluetoothLeService.EXTRA_DATA);
         return intentFilter;

@@ -1,1 +1,1 @@
-include ':app', ':libzxing', ':sphygmomanometer', ':bluetoothble'
+include ':app', ':libzxing', ':sphygmomanometer', ':bluetoothble', ':test', ':test2'

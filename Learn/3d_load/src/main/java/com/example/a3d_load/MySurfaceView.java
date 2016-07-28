@@ -122,7 +122,6 @@ public class MySurfaceView extends GLSurfaceView {
                 e.printStackTrace();
             }
         }
-
         GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0, GLUtils.getInternalFormat(bitmapTmp), bitmapTmp, GLUtils.getType(bitmapTmp), 0);
         bitmapTmp.recycle();          //纹理加载成功后释放图片
         return textureId;

@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapRegionDecoder;
 import android.graphics.Rect;
-import android.media.MediaPlayer;
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
@@ -85,8 +84,6 @@ public class VRGLSurfaceView extends MyGLSurfaceView {
         private int maPositionHandle, maTexCoorHandle;
         private int mMVPMatrixHandle;
 
-
-
         private int esGenSphere(int numSlices, float d) {
 
             int i;
@@ -116,6 +113,7 @@ public class VRGLSurfaceView extends MyGLSurfaceView {
 
             for (i = 0; i < numParallels; i++) {
                 for (j = 0; j < numSlices; j++) {
+                    //一个正方形
                     indices[iidex++] = (short) (i * (numSlices + 1) + j);
                     indices[iidex++] = (short) ((i + 1) * (numSlices + 1) + j);
                     indices[iidex++] = (short) ((i + 1) * (numSlices + 1) + (j + 1));
@@ -209,27 +207,12 @@ public class VRGLSurfaceView extends MyGLSurfaceView {
             model.rotateX(2.9f);
             world.addObject(model);
 
-            //摄像机矩阵
-     /*       float[] temp = new float[16];
-            android.opengl.Matrix.perspectiveM(temp, 0, 75.0f, mWidth / mHeight / 2.0f, 0.1f, 10000.0f);
-            Matrix project = new Matrix();
-            project.setRow(0, temp[0], temp[1], temp[2], temp[3]);
-            project.setRow(1, temp[4], temp[5], temp[6], temp[7]);
-            project.setRow(2, temp[8], temp[9], temp[10], temp[11]);
-            project.setRow(3, temp[12], temp[13], temp[14], temp[15]);*/
             Camera cam = world.getCamera();
             cam.moveCamera(Camera.CAMERA_MOVEIN, 2f);
             SimpleVector lookVector = new SimpleVector(0, 0, 0);
             cam.lookAt(lookVector);
-            // cam.setBack(project);
             mMatrix = cam.getBack();
 
-            //设置光源点
-            // SimpleVector sv = new SimpleVector();
-            //sv.set(model.getTransformedCenter());
-            //sv.y -= 100;
-            //sv.z -= 100;
-            //sun.setPosition(sv);
             MemoryHelper.compact();
         }
 

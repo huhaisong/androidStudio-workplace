@@ -230,7 +230,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
                 Constants.playPosition = -1;
             }
             mediaPlayer.start();
-
         }
 
         int numVertices = 0;
@@ -320,7 +319,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
             //调用此方法产生摄像机9参数位置矩阵
             Matrix.setLookAtM(mVMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-
 
             // Create our texture. This has to be done each time the surface is created.
             int[] textures = new int[1];

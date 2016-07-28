@@ -12,6 +12,8 @@
             <option value="$PROJECT_DIR$/bluetoothble" />
             <option value="$PROJECT_DIR$/libzxing" />
             <option value="$PROJECT_DIR$/sphygmomanometer" />
+            <option value="$PROJECT_DIR$/test" />
+            <option value="$PROJECT_DIR$/test2" />
           </set>
         </option>
         <option name="myModules">
@@ -21,6 +23,8 @@
             <option value="$PROJECT_DIR$/bluetoothble" />
             <option value="$PROJECT_DIR$/libzxing" />
             <option value="$PROJECT_DIR$/sphygmomanometer" />
+            <option value="$PROJECT_DIR$/test" />
+            <option value="$PROJECT_DIR$/test2" />
           </set>
         </option>
       </GradleProjectSettings>

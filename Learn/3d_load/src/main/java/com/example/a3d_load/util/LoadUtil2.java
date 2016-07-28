@@ -35,7 +35,6 @@ public class LoadUtil2 {
                     alv.add(Float.parseFloat(tempsa[3]));
                 }  else if (tempsa[0].trim().equals("f")) {//此行为三角形面
                     short index ;//三个顶点索引值的数组
-
                     //提取三角形第一个顶点的坐标
                     index = (short) (Integer.parseInt(tempsa[1].split("/")[0]) - 1);
                     indices.add(index);

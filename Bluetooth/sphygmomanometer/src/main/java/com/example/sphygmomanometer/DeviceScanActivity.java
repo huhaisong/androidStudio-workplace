@@ -46,6 +46,7 @@ public class DeviceScanActivity extends ListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                     && checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -57,13 +58,13 @@ public class DeviceScanActivity extends ListActivity {
 
         mHandler = new Handler();
 
-        // 检查当前手机是否支持ble 蓝牙,如果不支持退出程序
+        // 检查当前手机是否支持ble蓝牙,如果不支持退出程序
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
             finish();
         }
 
-        // 初始化 Bluetooth adapter, 通过蓝牙管理器得到一个参考蓝牙适配器(API必须在以上android4.3或以上和版本)
+        // 初始化Bluetooth adapter, 通过蓝牙管理器得到一个参考蓝牙适配器(API必须在以上android4.3或以上和版本)
         final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         mBluetoothAdapter = bluetoothManager.getAdapter();
 
@@ -186,13 +187,16 @@ public class DeviceScanActivity extends ListActivity {
                 @Override
                 public void run() {
 
-                    String struuid = bytes2HexString(reverseBytes(scanRecord)).replace("-", "").toLowerCase();
-                    Log.d(TAG, "run: " + struuid);
-                    String sring = device.getName();
-                    Log.d(TAG, "run:sring " + sring);
-                    if ("CardioChek Meter:".contains(sring)) {
-                        mLeDeviceListAdapter.addDevice(device);
-                        mLeDeviceListAdapter.notifyDataSetChanged();
+                    if (device != null) {
+                        String struuid = bytes2HexString(reverseBytes(scanRecord)).replace("-", "").toLowerCase();
+                        Log.d(TAG, "run: " + struuid);
+                        String sring = device.getName();
+                        Log.d(TAG, "run:sring " + sring);
+                        if (sring != null){
+                        if ("CardioChek Meter:".contains(sring)) {
+                            mLeDeviceListAdapter.addDevice(device);
+                            mLeDeviceListAdapter.notifyDataSetChanged();
+                        }}
                     }
                 }
             });

@@ -310,6 +310,4 @@ public class BluetoothActivity extends BaseActivity {
             });
         }
     }
-
-
 }
