@@ -71,7 +71,7 @@ public class VRListImg {
         }
     }
 
-    public void SetList(List<ListItem> List, int menuid, String Name) {
+    public void SetList(List<ListItem> List, int menuId, String Name) {
         if (Name != null) {
             if (mBmpbj != null) {
                 mBmpbj.recycle();
@@ -97,7 +97,7 @@ public class VRListImg {
                 PageCount++;
             }
         }
-        mIsGame = menuid == 3;
+        mIsGame = menuId == 3;
     }
 
     public int GetPageSize() {
@@ -126,11 +126,7 @@ public class VRListImg {
             mBitmap.recycle();
             mBitmap = null;
         }
-        //if (mBitmap == null)
-        {
-            mBitmap = Bitmap.createBitmap(mBmpbj.getWidth(), mBmpbj.getHeight(),
-                    Bitmap.Config.ARGB_8888);
-        }
+        mBitmap = Bitmap.createBitmap(mBmpbj.getWidth(), mBmpbj.getHeight(), Bitmap.Config.ARGB_8888);
         mDrid++;
         if (mDrid > 100)
             mDrid = 0;
@@ -144,7 +140,7 @@ public class VRListImg {
                 if (item != null) {
                     long id = item.ThumbnailId;
                     Bitmap bitmap;
-                    if (mIsGame) {//是否是游戏
+                    if (mIsGame) {//游戏
                         bitmap = null;
                         try {
                             bitmap = BitmapHelper.loadImage(mContext.getAssets().open(item.Path));
@@ -168,11 +164,10 @@ public class VRListImg {
                         int left = LEFT + (i % RowNum) * (BoxWidth);
                         int top = TOP + (i / RowNum) * (BoxHeight);
 
-                        //画视频的缩略图或者画图片的缩略图或者游戏的缩略图
-                        canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(),
-                                        bitmap.getHeight()),
+                        //画视频或者图片或者游戏的缩略图
+                        canvas.drawBitmap(bitmap,
+                                new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()),
                                 new Rect(left, top, left + SUBWIDTH, top + SUBHEIGHT), null);
-
                         bitmap.recycle();
                         //如果是视频，画一个播放按钮
                         if (item.IsVideo) {
@@ -205,11 +200,7 @@ public class VRListImg {
             mHotBitmap.recycle();
             mHotBitmap = null;
         }
-        //if (mHotBitmap == null)
-        {
-            mHotBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(),
-                    Bitmap.Config.ARGB_8888);
-        }
+        mHotBitmap = Bitmap.createBitmap(mBitmap.getWidth(), mBitmap.getHeight(), Bitmap.Config.ARGB_8888);
         mDrid++;
         if (mDrid > 100)
             mDrid = 0;

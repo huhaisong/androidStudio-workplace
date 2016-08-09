@@ -19,10 +19,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import com.ARTECH.vr_launcher.ListItem;
-import com.ARTECH.vr_launcher.R;
 import com.ARTECH.vr_launcher.VRListImg;
 import com.ARTECH.vr_launcher.activity.Player360ViedoActivity;
 import com.threed.jpct.Camera;
@@ -64,10 +62,7 @@ public class VRView extends VRGLSurfaceView {
 
     private int lastaddsize = 0;
 
-    private int fps = 0;
-    private int lfps = 0;
     private RGBColor back = new RGBColor(50, 50, 100);
-    private Texture font = null;
     private Context mContext;
 
     private int hostid = 0;
@@ -101,13 +96,13 @@ public class VRView extends VRGLSurfaceView {
         mVrlist.Draw();
     }
 
+    //获取信息列表
     private void GetList(Uri uri, Boolean IsVideo) {
         ContentResolver mContentResolver = mContext.getContentResolver();
         Cursor mCursor = mContentResolver.query(uri, null, null, null, null);
         if (mCursor != null) {
             mCursor.moveToFirst();
             int num = mCursor.getCount();
-            //Log.e("ar110","num:"+num);
             if (num > 0) {
                 do {
                     String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
@@ -126,17 +121,8 @@ public class VRView extends VRGLSurfaceView {
     }
 
     public void GetList() {
-        //mListvr.clear();
-        //mList3d.clear();
         mList360.clear();
-
-        //mPlayVideoListvr.clear();
-        //mPlayVideoList3d.clear();
         mPlayVideoList360.clear();
-
-        //mPlayImageListvr.clear();
-        //mPlayImageList3d.clear();
-        //mPlayImageList360.clear();
         mListgame.clear();
 
         //GetList(MediaStore.Images.Media.INTERNAL_CONTENT_URI,false);
@@ -157,124 +143,105 @@ public class VRView extends VRGLSurfaceView {
 
     Handler mHandler = new Handler() {
         public void handleMessage(android.os.Message msg) {
-            switch (msg.what) {
-                case 333:
-                    //mVrRenderer.SetTexture(TexPath);
-                    break;
-                case 8888:
-                    if (showmenu == 0) {
-                        if (mMenuSet.getID() == msg.arg1) {
-                            Intent startIntent = new Intent();
-                            startIntent.setClassName("com.android.settings", "com.android.settings.Settings");
-                            mContext.startActivity(startIntent);
+            if (msg.what == 8888) {
+                if (showmenu == 0) {
+                    if (mMenuSet.getID() == msg.arg1) {
+                        Intent startIntent = new Intent();
+                        startIntent.setClassName("com.android.settings", "com.android.settings.Settings");
+                        mContext.startActivity(startIntent);
+                    } else if (mMenuVid.getID() == msg.arg1) {
+                        mVrlist.SetList(mList360, showmenu, "bj_360.png");
+                        mVrlist.Draw();
+                        updateHots = true;
+                        showmenu = 2;
 
-                            //showmenu=1;
-                        } else if (mMenuVid.getID() == msg.arg1) {
+                    } else if (mMenuGame.getID() == msg.arg1) {
 
-                            mVrlist.SetList(mList360, showmenu, "bj_360.png");
+                        mVrlist.SetList(mListgame, 3, "bj_game.png");
+                        mVrlist.Draw();
+                        updateHots = true;
+                        showmenu = 3;
+                    } else {
+                        showmenu = 0;
+                    }
+                } else {
+                    if (mButRetu.getID() == msg.arg1) {
+                        showmenu = 0;
+                    } else if (mButUP.getID() == msg.arg1) {
+                        int page = mVrlist.Page;
+                        mVrlist.CutPage();
+                        if (page != mVrlist.Page) {
                             mVrlist.Draw();
                             updateHots = true;
-                            showmenu = 2;
-
-                        } else if (mMenuGame.getID() == msg.arg1) {
-
-                            mVrlist.SetList(mListgame, 3, "bj_game.png");
+                        }
+                    } else if (mButDown.getID() == msg.arg1) {
+                        int page = mVrlist.Page;
+                        mVrlist.AddPage();
+                        if (page != mVrlist.Page) {
                             mVrlist.Draw();
                             updateHots = true;
-                            showmenu = 3;
-                        } else {
-                            showmenu = 0;
                         }
                     } else {
-                        if (mButRetu.getID() == msg.arg1) {
-                            showmenu = 0;
-                        } else if (mButUP.getID() == msg.arg1) {
-                            int page = mVrlist.Page;
-                            mVrlist.CutPage();
-
-                            if (page != mVrlist.Page) {
-                                mVrlist.Draw();
-                                updateHots = true;
-
+                        int pagesize = mButItem.size();
+                        if (pagesize > mVrlist.GetPageSize())
+                            pagesize = mVrlist.GetPageSize();
+                        int SelId = -1;
+                        for (int i = 0; i < pagesize; i++) {
+                            Object3D obj = mButItem.get(i);
+                            if (obj.getID() == msg.arg1) {
+                                SelId = i;
+                                break;
                             }
-                        } else if (mButDown.getID() == msg.arg1) {
-                            int page = mVrlist.Page;
-                            mVrlist.AddPage();
+                        }
+                        if (SelId != -1) {
+                            SelId = mVrlist.Page * mVrlist.PageSize + SelId;
+                            if (showmenu == 3 && SelId < mVrlist.GetPageSize()) {
+                                if (SelId == 0) {
+                                    String PackName = "com.archiactinteractive.LfGC";
 
-                            if (page != mVrlist.Page) {
-                                mVrlist.Draw();
-                                updateHots = true;
+                                    Intent LaunchIntent = mContext.getPackageManager().getLaunchIntentForPackage(PackName);
 
-                            }
-                        } else {
+                                    if (LaunchIntent != null)
+                                        mContext.startActivity(LaunchIntent);
+                                    else {
+                                        PackName = "com.iphodroid.Rollercoaster";
 
-                            int pagesize = mButItem.size();
-                            if (pagesize > mVrlist.GetPageSize())
-                                pagesize = mVrlist.GetPageSize();
-                            int SelId = -1;
-                            for (int i = 0; i < pagesize; i++) {
-                                Object3D obj = mButItem.get(i);
-                                if (obj.getID() == msg.arg1) {
-                                    SelId = i;
-                                    break;
-                                }
-                            }
-                            if (SelId != -1) {
-                                SelId = mVrlist.Page * mVrlist.PageSize + SelId;
-                                if (showmenu == 3 && SelId < mVrlist.GetPageSize()) {
-                                    if (SelId == 0) {
-                                        String PackName = "com.archiactinteractive.LfGC";
-
-                                        Intent LaunchIntent = mContext.getPackageManager().getLaunchIntentForPackage(PackName);
+                                        LaunchIntent = mContext.getPackageManager().getLaunchIntentForPackage(PackName);
 
                                         if (LaunchIntent != null)
                                             mContext.startActivity(LaunchIntent);
-                                        else {
-                                            PackName = "com.iphodroid.Rollercoaster";
 
-                                            LaunchIntent = mContext.getPackageManager().getLaunchIntentForPackage(PackName);
-
-                                            if (LaunchIntent != null)
-                                                mContext.startActivity(LaunchIntent);
-
-                                        }
-                                    } else if (SelId == 1) {
-                                        String PackName = "com.iphodroid.Rollercoaster";
-
-                                        Intent LaunchIntent = mContext.getPackageManager().getLaunchIntentForPackage(PackName);
-
-                                        if (LaunchIntent != null)
-                                            mContext.startActivity(LaunchIntent);
                                     }
-                                } else if (showmenu == 2 && SelId < mPlayVideoList360.size()) {
+                                } else if (SelId == 1) {
+                                    String PackName = "com.iphodroid.Rollercoaster";
 
-                                    ArrayList<String> list = mPlayVideoList360;
-                                    Intent intent = new Intent(mContext, Player360ViedoActivity.class);
-                                    if (list != null) {
-                                        Bundle bundle = new Bundle();
-                                        bundle.putStringArrayList("list", list);
-                                        bundle.putInt("index", SelId);
-                                        bundle.putInt("Vr", showmenu);
-                                        intent.putExtra("playlist", bundle);
-                                        mContext.startActivity(intent);
-                                    }
+                                    Intent LaunchIntent = mContext.getPackageManager().getLaunchIntentForPackage(PackName);
+
+                                    if (LaunchIntent != null)
+                                        mContext.startActivity(LaunchIntent);
                                 }
+                            } else if (showmenu == 2 && SelId < mPlayVideoList360.size()) {
 
+                                ArrayList<String> list = mPlayVideoList360;
+                                Intent intent = new Intent(mContext, Player360ViedoActivity.class);
+                                if (list != null) {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putStringArrayList("list", list);
+                                    bundle.putInt("index", SelId);
+                                    bundle.putInt("Vr", showmenu);
+                                    intent.putExtra("playlist", bundle);
+                                    mContext.startActivity(intent);
+                                }
                             }
                         }
                     }
-                    //if(mLikethis!=null && msg.arg1>-1)
-                    //{
-                    //	mLikethis.OnItem(msg.arg1);
-                    //}
-                    break;
+                }
             }
         }
     };
 
     class VrRenderer implements Renderer {
 
-        private long times = System.currentTimeMillis();
         private Light sun = null;
 
         private Matrix mMatrix;
@@ -295,22 +262,13 @@ public class VRView extends VRGLSurfaceView {
             if (world != null)
                 world.removeAllObjects();
             world = new World();
+            //设置灯光
             world.setAmbientLight(64, 64, 64);
             //world.setAmbientLight(255, 255, 255);
-
-            //设置灯光
             sun = new Light(world);
             sun.setIntensity(255, 255, 255);
 
-            //设置纹理
-            if (TextureManager.getInstance().getTextureID("texture") < 0) {
-                //Log.e("Ar110","TextureManager="+TextureManager.getInstance().getTextureID("texture"));
-                Texture texture = new Texture(BitmapHelper.rescale(BitmapHelper.convert
-                        (getResources().getDrawable(R.drawable.ic_launcher)), 64, 64));
-                TextureManager.getInstance().addTexture("texture", texture);
-                font = new Texture(mContext.getResources().openRawResource(R.raw.numbers));
-                font.setMipmap(false);
-            }
+            //加载模型及纹理
             loadDefault();
             //设置摄像机
             Camera cam = world.getCamera();
@@ -327,7 +285,8 @@ public class VRView extends VRGLSurfaceView {
             updateHots = true;
 
             MemoryHelper.compact();
-            if (mHandler2 != null) {
+
+            if (mHandler2 != null) {//加载完成发送消息
                 Message message = new Message();
                 message.what = 8888;
                 mHandler2.sendMessageDelayed(message, 0);
@@ -505,9 +464,7 @@ public class VRView extends VRGLSurfaceView {
                             world.addObject(obj);
                         }
                         lastaddsize = pagesize;
-
                     }
-
                 }
                 loadtexture("Menubox", mVrlist.GetBmp());
                 loadtexture("bj_hot.png", mVrlist.GetHotBmp());
@@ -528,7 +485,6 @@ public class VRView extends VRGLSurfaceView {
         }
 
         private void loadtexture(String Name, int w) {
-
             try {
                 if (TextureManager.getInstance().getTextureID(Name) < 0) {
                     Texture uv1 = new Texture(BitmapHelper.rescale(BitmapHelper
@@ -539,7 +495,6 @@ public class VRView extends VRGLSurfaceView {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         }
 
         private void loadtexture(String Name) {
@@ -662,7 +617,6 @@ public class VRView extends VRGLSurfaceView {
                         new SimpleVector(pr, pt, zz), 0.0f, 0.0f,
                         new SimpleVector(pr, pb, zz), 0.0f, 1.0f,
                         TextureManager.getInstance().getTextureID("img.png"));
-
                 mMenuGame.build();
                 esSector(32);
                 world.addObject(object3d);
@@ -681,22 +635,12 @@ public class VRView extends VRGLSurfaceView {
             }
         }
 
-        float lasty = 0;
-        float lastx = 0;
-        float lastz = 0;
-
         public void onDrawFrame(GL10 gl) {
-            float[] EulerAngles = new float[3];
-            float[] ForwardVector = new float[3];
             float[] t;
             Camera cam = world.getCamera();
             Matrix m = mMatrix.cloneMatrix();
             mHeadTracker.getLastHeadView(mHeadTransform.getHeadView(), 0);
-            mHeadTransform.getEulerAngles(EulerAngles, 0);
-            mHeadTransform.getForwardVector(ForwardVector, 0);
-            EulerAngles[0] = (EulerAngles[0] + (float) Math.PI / 2.0f);
 
-            //SimpleVector dir = Interact2D.reproject2D3DWS( cam, fb, fX, fY).normalize();
             SimpleVector dir = Interact2D.reproject2D3DWS(cam, fb, 640, 720).normalize();
             Object[] res = world.calcMinDistanceAndObject3D(cam.getPosition(), dir, 10000);
             Object3D picked = (Object3D) res[1];
@@ -720,8 +664,6 @@ public class VRView extends VRGLSurfaceView {
                         mButDown.setTexture("Menubox");
 
                     int pagesize = mButItem.size();
-                    //if(pagesize>mVrlist.GetPageSize())
-                    //pagesize=mVrlist.GetPageSize();
                     for (int i = 0; i < pagesize; i++) {
                         Object3D obj = mButItem.get(i);
                         if (obj.getID() == pickid)
@@ -753,8 +695,6 @@ public class VRView extends VRGLSurfaceView {
                     mButUP.setTexture("Menubox");
                     mButDown.setTexture("Menubox");
                     int pagesize = mButItem.size();
-                    //if(pagesize>mVrlist.GetPageSize())
-                    //pagesize=mVrlist.GetPageSize();
                     for (int i = 0; i < pagesize; i++) {
                         Object3D obj = mButItem.get(i);
                         obj.setTexture("Menubox");
@@ -777,27 +717,14 @@ public class VRView extends VRGLSurfaceView {
             }
             update();
             fb.clear(back);
-            //GLES20.glBlendFunc(GL10.GL_SRC_ALPHA, GL10.GL_ONE_MINUS_SRC_ALPHA);
-            //GLES20.glEnable(GL10.GL_BLEND);
-            if (lasty == 0) {
-            } else {
-                Matrix mheadm = new Matrix();
-                t = mHeadTransform.getHeadView();
-                mheadm.setRow(0, t[0], -1.0f * t[1], -1.0f * t[2], t[3]);
-                mheadm.setRow(1, -1.0f * t[4], t[5], t[6], t[7]);
-                mheadm.setRow(2, -1.0f * t[8], t[9], t[10], t[11]);
-                mheadm.setRow(3, t[12], t[13], t[14], t[15]);
-                m.matMul(mheadm);
-                cam.setBack(m);
-                //cam.rotateCameraX(lastx-EulerAngles[0]);
-                //object3d.rotateX(lastx-EulerAngles[0]);
-                //object3d.rotateZ(EulerAngles[1]-lasty);
-                //object3d.rotateY(EulerAngles[2]-lastz);
-                //cam.rotateCameraY(lasty-EulerAngles[1]);
-            }
-            lastz = EulerAngles[2];
-            lasty = EulerAngles[1];
-            lastx = EulerAngles[0];
+            Matrix mheadm = new Matrix();
+            t = mHeadTransform.getHeadView();
+            mheadm.setRow(0, t[0], -1.0f * t[1], -1.0f * t[2], t[3]);
+            mheadm.setRow(1, -1.0f * t[4], t[5], t[6], t[7]);
+            mheadm.setRow(2, -1.0f * t[8], t[9], t[10], t[11]);
+            mheadm.setRow(3, t[12], t[13], t[14], t[15]);
+            m.matMul(mheadm);
+            cam.setBack(m);
             //object3d.setTranslationMatrix(new Matrix().);
             world.renderScene(fb);
             GLES20.glViewport(0, 0, fb.getWidth(), fb.getHeight());
@@ -811,33 +738,12 @@ public class VRView extends VRGLSurfaceView {
             cam.setBack(m);
             world.draw(fb);
             //	GLES20.glViewport(0, 0, fb.getWidth(), fb.getHeight());
-            blitNumber(lfps, 5, 5);
             fb.display();
-            if (System.currentTimeMillis() - times >= 1000) {
-                //	Logger.log(fps + "fps");
-                lfps = fps;
-                fps = 0;
-                times = System.currentTimeMillis();
-            }
-            fps++;
         }
 
         @Override
         public void onSurfaceCreated(GL10 arg0, javax.microedition.khronos.egl.EGLConfig arg1) {
             // TODO Auto-generated method stub
-
-        }
-
-        private void blitNumber(int number, int x, int y) {
-            if (font != null) {
-                String sNum = Integer.toString(number);
-                for (int i = 0; i < sNum.length(); i++) {
-                    char cNum = sNum.charAt(i);
-                    int iNum = cNum - 48;
-                    fb.blit(font, iNum * 5, 0, x, y, 5, 9, 5 * 4, 9 * 4, 10, true, null);
-                    x += 20;
-                }
-            }
         }
     }
 
@@ -847,4 +753,5 @@ public class VRView extends VRGLSurfaceView {
         mHandler2 = handler;
     }
 }
+
 

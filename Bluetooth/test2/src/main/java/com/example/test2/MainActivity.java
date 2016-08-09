@@ -1,23 +1,15 @@
 package com.example.test2;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.ListActivity;
 import android.os.Bundle;
-import android.view.Menu;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ListActivity {
+    private final static String TAG = MainActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main,menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
 }

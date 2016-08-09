@@ -244,11 +244,9 @@ public class VRImageView extends View {
 
                 //Log.e("ar110","newbh="+newbh+",newbw="+newbw+",left="+left+",top="+top+","+bitmap.getWidth());
                 canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(left, top, left + newbw, top + newbh), null);
-
                 left = left + SCREENWIDTH / 2;
                 canvas.drawBitmap(bitmap, new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight()), new Rect(left, top, left + newbw, top + newbh), null);
                 bitmap.recycle();
-
             }
 
 			   /*if(ShowOther==1)

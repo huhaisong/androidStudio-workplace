@@ -1,19 +1,26 @@
 package com.example.test;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattDescriptor;
+import android.bluetooth.BluetoothGattService;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import java.util.UUID;
+
 /**
  * Created by 111 on 2016/7/27.
  */
 public class TestActivity extends AppCompatActivity {
-
 
 
     @Override
@@ -54,4 +61,5 @@ public class TestActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

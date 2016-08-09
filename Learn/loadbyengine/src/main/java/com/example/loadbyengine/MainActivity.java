@@ -35,6 +35,7 @@ import com.threed.jpct.util.MemoryHelper;
  * a proper application for Android. It includes basic activity management to
  * handle pause and resume...
  *
+ *
  * @author EgonOlsen
  *
  */

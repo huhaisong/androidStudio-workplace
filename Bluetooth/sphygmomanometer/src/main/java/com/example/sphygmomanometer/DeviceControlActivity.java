@@ -2,7 +2,6 @@ package com.example.sphygmomanometer;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -16,12 +15,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ExpandableListView;
-import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,18 +29,15 @@ public class DeviceControlActivity extends Activity {
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";
 
     private TextView mConnectionState;
-    private TextView mDataField;
-    private String mDeviceName;
     private String mDeviceAddress;
-    private ExpandableListView mGattServicesList;
-    public static BluetoothGatt mBluetoothGatt;
+    //public static BluetoothGatt mBluetoothGatt;
     private BluetoothLeService mBluetoothLeService;
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
 
     private boolean mConnected = false;
 
-    private final String LIST_NAME = "NAME";
-    private final String LIST_UUID = "UUID";
+//    private final String LIST_NAME = "NAME";
+//    private final String LIST_UUID = "UUID";
 
     // Code to manage Service lifecycle.
     private final ServiceConnection mServiceConnection = new ServiceConnection() {
@@ -89,7 +81,6 @@ public class DeviceControlActivity extends Activity {
                 mConnected = false;
                 updateConnectionState(R.string.disconnected);
                 invalidateOptionsMenu();
-                clearUI();
             } else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
                 displayGattServices(mBluetoothLeService.getSupportedGattServices());
             } else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
@@ -98,43 +89,32 @@ public class DeviceControlActivity extends Activity {
         }
     };
 
-    private void clearUI() {
-        mGattServicesList.setAdapter((SimpleExpandableListAdapter) null);
-        mDataField.setText(R.string.no_data);
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gatt_services_characteristics);
 
-//        java.lang.SecurityException: Need ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION permission to get scan results
         final Intent intent = getIntent();
-        mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
+        String mDeviceName = intent.getStringExtra(EXTRAS_DEVICE_NAME);
         mDeviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
-
-        // Sets up UI references.
-        ((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
-        mConnectionState = (TextView) findViewById(R.id.connection_state);
-        mDataField = (TextView) findViewById(R.id.data_value);
-
-        getActionBar().setTitle(mDeviceName);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
-        boolean bll = bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
-        if (bll) {
-            System.out.println("---------------");
-        } else {
-            System.out.println("===============");
+        if (getActionBar() != null) {
+            getActionBar().setTitle(mDeviceName);
+            getActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        ((TextView) findViewById(R.id.device_address)).setText(mDeviceAddress);
 
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+        mConnectionState = (TextView) findViewById(R.id.connection_state);
+
+        Intent gattServiceIntent = new Intent(this, BluetoothLeService.class);
+        bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+
+        /*findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String s = BodyCHOLRead(sb.toString());
                 Log.d(TAG, "onClick: 结果"+s);
             }
-        });
+        });*/
     }
 
     @Override
@@ -197,10 +177,12 @@ public class DeviceControlActivity extends Activity {
             }
         });
     }
+
     StringBuffer sb = new StringBuffer();
+
     private void displayData(String data) {
         sb.append(data);
-        Log.d(TAG, "displayData: "+sb.toString());
+        Log.d(TAG, "displayData: " + sb.toString());
     }
 
     // Demonstrates how to iterate through the supported GATT
@@ -211,15 +193,15 @@ public class DeviceControlActivity extends Activity {
     private void displayGattServices(List<BluetoothGattService> gattServices) {
         if (gattServices == null)
             return;
-        String uuid = null;
+        String uuid;
         // Loops through available GATT Services.
         for (BluetoothGattService gattService : gattServices) {
             uuid = gattService.getUuid().toString();
-            Log.d(TAG, "displayGattServices: "+uuid);
-            List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
-            for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-                uuid = gattCharacteristic.getUuid().toString();
-                if (uuid.contains("fff4")) {
+            // Log.d(TAG, "displayGattServices: " + uuid);
+            if (uuid.equals("0000180a-0000-1000-8000-00805f9b34fb")) {
+                List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
+                for (BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
+                    uuid = gattCharacteristic.getUuid().toString();
                     Log.e("console", "2gatt Characteristic: " + uuid);
                     mBluetoothLeService.setCharacteristicNotification(gattCharacteristic, true);
                     mBluetoothLeService.readCharacteristic(gattCharacteristic);
@@ -227,9 +209,9 @@ public class DeviceControlActivity extends Activity {
             }
         }
     }
+
     /**
-     *
-     * @return
+     * @return 广播过滤器
      */
     private static IntentFilter makeGattUpdateIntentFilter() {
         final IntentFilter intentFilter = new IntentFilter();
@@ -244,8 +226,8 @@ public class DeviceControlActivity extends Activity {
     /**
      * 将16进制 转换成10进制
      *
-     * @param str
-     * @return
+     * @param str 传入的16进制的字符串
+     * @return 返回10进制的字符串
      */
     public static String print10(String str) {
 
@@ -255,14 +237,16 @@ public class DeviceControlActivity extends Activity {
             int num = Integer.parseInt(array[i], 16);
             buff.append(String.valueOf((char) num));
         }
+        int a = Integer.parseInt(buff.toString());
+        Log.i(TAG, "print10: " + a);
         return buff.toString();
     }
 
     /**
      * byte转16进制
      *
-     * @param b
-     * @return
+     * @param b 传入的byte
+     * @return 转换成16进制的字符串
      */
     public static String byte2HexStr(byte[] b) {
 
@@ -275,13 +259,30 @@ public class DeviceControlActivity extends Activity {
         }
         return sb.toString().toUpperCase().trim();
     }
+}
 
 
-    /**
-     * 分析胆固醇数据
-     * @param data
-     * @return
-     */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /*
+    //分析胆固醇数据
     public static String BodyCHOLRead(String data) {
         // 根据换行符分割
         String[] datas = data.split(print10("0A"));
@@ -331,8 +332,8 @@ public class DeviceControlActivity extends Activity {
         df.setMaximumFractionDigits(2);
 
 
-        //*胆固醇、高密度脂蛋白、低密度脂蛋白的换算都一样：1mmol/L=38.7mg/dL；
-        //*甘油三脂是1mmol/L=88.6mg/dL
+        /*//*胆固醇、高密度脂蛋白、低密度脂蛋白的换算都一样：1mmol/L=38.7mg/dL；
+        /*//*甘油三脂是1mmol/L=88.6mg/dL
 
         if(type == 0){
             return df.format(value / 38.7);
@@ -347,5 +348,4 @@ public class DeviceControlActivity extends Activity {
             return df.format(value / 38.7);
         }
         return null;
-    }
-}
+    }*/

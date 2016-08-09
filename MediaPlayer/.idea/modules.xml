@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/aaaa/aaaa.iml" filepath="$PROJECT_DIR$/aaaa/aaaa.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/glmediaplayer/glmediaplayer.iml" filepath="$PROJECT_DIR$/glmediaplayer/glmediaplayer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mediaplaytest/mediaplaytest.iml" filepath="$PROJECT_DIR$/mediaplaytest/mediaplaytest.iml" />
       <module fileurl="file://$PROJECT_DIR$/sphere/sphere.iml" filepath="$PROJECT_DIR$/sphere/sphere.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
     </modules>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">VR_Launcher</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="Volume">Volume %1$02d%%</string>
+    <string name="SEEK">Seek To %1$03d:%2$02d/%3$03d:%4$02d</string>
+
+    <string name="PlayerError">This file play an error! Or this file cannot be played! Automatically play the next video after 1 second</string>
+
+    <string name="Playerend">Play finish! Is about to play a video</string>
+    <string name="pause">Pause...</string>
+    <string name="load">Loading...</string>
+</resources>

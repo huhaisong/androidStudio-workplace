@@ -112,10 +112,8 @@ public class DeviceScanActivity extends ListActivity {
 
         // 为了确保设备上蓝牙能使用, 如果当前蓝牙设备没启用,弹出对话框向用户要求授予权限来启用
         if (!mBluetoothAdapter.isEnabled()) {
-            if (!mBluetoothAdapter.isEnabled()) {
-                Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-            }
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
         // Initializes list view adapter.
         mLeDeviceListAdapter = new LeDeviceListAdapter();
@@ -166,7 +164,6 @@ public class DeviceScanActivity extends ListActivity {
                     invalidateOptionsMenu();
                 }
             }, SCAN_PERIOD);
-
             mScanning = true;
             mBluetoothAdapter.startLeScan(mLeScanCallback);
         } else {
@@ -181,22 +178,23 @@ public class DeviceScanActivity extends ListActivity {
     // Device scan callback.
     private BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
 
+        //rssi的值作为对远程蓝牙设备的报告; 0代表没有蓝牙设备;scanRecode: 远程设备提供的配对号(公告);
         @Override
         public void onLeScan(final BluetoothDevice device, int rssi, final byte[] scanRecord) {
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
 
                     if (device != null) {
                         String struuid = bytes2HexString(reverseBytes(scanRecord)).replace("-", "").toLowerCase();
-                        Log.d(TAG, "run: " + struuid);
+                        Log.d(TAG, "run:struuid: " + struuid);
                         String sring = device.getName();
-                        Log.d(TAG, "run:sring " + sring);
-                        if (sring != null){
-                        if ("CardioChek Meter:".contains(sring)) {
+                        Log.d(TAG, "run:device.getName(): " + sring);
+                        if (sring != null) {
                             mLeDeviceListAdapter.addDevice(device);
                             mLeDeviceListAdapter.notifyDataSetChanged();
-                        }}
+                        }
                     }
                 }
             });

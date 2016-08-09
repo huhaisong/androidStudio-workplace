@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/cardboard/cardboard.iml" filepath="$PROJECT_DIR$/cardboard/cardboard.iml" />
       <module fileurl="file://$PROJECT_DIR$/loadbyengine/loadbyengine.iml" filepath="$PROJECT_DIR$/loadbyengine/loadbyengine.iml" />
       <module fileurl="file://$PROJECT_DIR$/mylibrary/mylibrary.iml" filepath="$PROJECT_DIR$/mylibrary/mylibrary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/pick_up/pick_up.iml" filepath="$PROJECT_DIR$/pick_up/pick_up.iml" />
       <module fileurl="file://$PROJECT_DIR$/sphere/sphere.iml" filepath="$PROJECT_DIR$/sphere/sphere.iml" />
       <module fileurl="file://$PROJECT_DIR$/texture/texture.iml" filepath="$PROJECT_DIR$/texture/texture.iml" />
       <module fileurl="file://$PROJECT_DIR$/texture2/texture2.iml" filepath="$PROJECT_DIR$/texture2/texture2.iml" />

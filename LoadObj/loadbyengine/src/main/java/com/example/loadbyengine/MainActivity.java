@@ -6,7 +6,6 @@ import android.app.Activity;
 
 public class MainActivity extends Activity {
     private VRGLSurfaceView mGLView;
-    //private static final String TAG = "MainActivity";
 
     protected void onCreate(Bundle savedInstanceState) {
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE) {
@@ -27,10 +26,5 @@ public class MainActivity extends Activity {
     protected void onResume() {
         super.onResume();
         mGLView.onResume();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 }

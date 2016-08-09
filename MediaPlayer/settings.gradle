@@ -1,1 +1,1 @@
-include ':app', ':sphere', ':glmediaplayer', ':test', ':aaaa'
+include ':app', ':sphere', ':glmediaplayer', ':test', ':aaaa', ':mediaplaytest'

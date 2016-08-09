@@ -30,12 +30,11 @@ import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import static android.opengl.Matrix.perspectiveM;
-import static com.example.sphere.ShaderUtil.createProgram;
 
 public class MyGLSurfaceView extends GLSurfaceView {
     private HeadTracker mHeadTracker;
     private MyRenderer mRenderer;
-    int textureId;  //系统分配的纹理id
+   // int textureId;  //系统分配的纹理id
     private float[] mHeadView = new float[16];
     private boolean isSended = false;
 
@@ -107,59 +106,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
     public void onStop(){
         mRenderer.stopPlayback();
-    }
-
-
-    public void initTexture()//textureId
-    {
-        //生成纹理ID
-        int[] textures = new int[1];
-        GLES20.glGenTextures(1, textures, 0);
-        textureId = textures[0];
-
-        GLES20.glBindTexture(GLES20.GL_TEXTURE_2D, textureId);  //绑定纹理
-
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
-        GLES20.glTexParameterf(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
-
-        InputStream inputStream = null;
-        Bitmap bitmapTmp = null;
-        try {
-            inputStream = getResources().getAssets().open("bg.jpg");
-            //获得图片的宽、高
-            BitmapFactory.Options tmpOptions = new BitmapFactory.Options();
-            tmpOptions.inJustDecodeBounds = true;
-            BitmapFactory.decodeStream(inputStream, null, tmpOptions);
-            tmpOptions.inPreferredConfig = Bitmap.Config.RGB_565;
-            int width = tmpOptions.outWidth;
-            int height = tmpOptions.outHeight;
-            BitmapRegionDecoder bitmapRegionDecoder = BitmapRegionDecoder.newInstance(inputStream, false);
-            bitmapTmp = bitmapRegionDecoder.decodeRegion(new Rect(0, 0, width, height), tmpOptions);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        //实际加载纹理
-        GLUtils.texImage2D
-                (
-                        GLES20.GL_TEXTURE_2D,   //纹理类型，在OpenGL ES中必须为GL10.GL_TEXTURE_2D
-                        0,                      //纹理的层次，0表示基本图像层，可以理解为直接贴图
-                        bitmapTmp,              //纹理图像
-                        0                       //纹理边框尺寸
-                );
-        if (bitmapTmp != null) {
-
-            bitmapTmp.recycle();          //纹理加载成功后释放图片
-        }
     }
 
     class MyRenderer implements Renderer, MediaPlayer.OnCompletionListener,
@@ -308,14 +254,14 @@ public class MyGLSurfaceView extends GLSurfaceView {
             GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             mVertexShader = ShaderUtil.loadFromAssetsFile("vertex.sh", getResources());
             mFragmentShader = ShaderUtil.loadFromAssetsFile("frag.sh", getResources());
-            mProgram = createProgram(mVertexShader, mFragmentShader);
+            mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
             maPositionHandle = GLES20.glGetAttribLocation(mProgram, "aPosition");
             maTexCoorHandle = GLES20.glGetAttribLocation(mProgram, "aTexCoor");
             mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
 
             GLES20.glEnable(GLES20.GL_DEPTH_TEST);
             GLES20.glDisable(GLES20.GL_CULL_FACE);
-            initTexture();
+            //initTexture();
 
             //调用此方法产生摄像机9参数位置矩阵
             Matrix.setLookAtM(mVMatrix, 0, 0, 0, 3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
@@ -350,7 +296,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             mWidth = width;
             mHeight = height;
-
         }
 
         @Override

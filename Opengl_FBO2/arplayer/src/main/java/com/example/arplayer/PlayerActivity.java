@@ -70,8 +70,8 @@ public class PlayerActivity extends Activity {
             mText1 = (TextView) findViewById(R.id.Msg0);
             mText2 = (TextView) findViewById(R.id.Msg1);
 
-            mBottun = (View) findViewById(R.id.button);
-            vRButtonView = (View) findViewById(R.id.vr_button);
+            mBottun =  findViewById(R.id.button);
+            vRButtonView = findViewById(R.id.vr_button);
 
             // surface.getHolder().addCallback(mSHCallback);
             mBottun.setOnClickListener(new View.OnClickListener() {

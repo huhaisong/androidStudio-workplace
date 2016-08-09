@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/VrApplication.iml" filepath="$PROJECT_DIR$/VrApplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/loadbyengine/loadbyengine.iml" filepath="$PROJECT_DIR$/loadbyengine/loadbyengine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/piked_up/piked_up.iml" filepath="$PROJECT_DIR$/piked_up/piked_up.iml" />
+      <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vr_launcher/vr_launcher.iml" filepath="$PROJECT_DIR$/vr_launcher/vr_launcher.iml" />
+    </modules>
+  </component>
+</project>

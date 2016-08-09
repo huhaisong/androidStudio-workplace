@@ -63,15 +63,12 @@ public class LeDeviceListAdapter extends BaseAdapter {
 		if (view == null) {
 			view = mInflator.inflate(R.layout.listitem_device, null);
 			viewHolder = new ViewHolder();
-			viewHolder.deviceAddress = (TextView) view
-					.findViewById(R.id.device_address);
-			viewHolder.deviceName = (TextView) view
-					.findViewById(R.id.device_name);
+			viewHolder.deviceAddress = (TextView) view.findViewById(R.id.device_address);
+			viewHolder.deviceName = (TextView) view.findViewById(R.id.device_name);
 			view.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) view.getTag();
 		}
-
 		BluetoothDevice device = mLeDevices.get(i);
 		final String deviceName = device.getName();
 		if (deviceName != null && deviceName.length() > 0)

@@ -1,0 +1,62 @@
+newmtl MeshFBXASC032ObjectSG1
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd rock_002_c.png
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl hairTubeShader1SG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.00 0.00 0.00
+Tf 1.00 1.00 1.00
+map_Kd 7869002.png
+Ni 1.00
+Ks 0.50 0.50 0.50
+newmtl st1_MeshFBXASC032ObjectSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd rock_001_c.png
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl st2_MeshFBXASC032ObjectSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd rock_003_c.png
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl st3_MeshFBXASC032ObjectSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd rock_004_c.png
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl st4_MeshFBXASC032ObjectSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd rock_005_c.png
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
+newmtl st8_MeshFBXASC032ObjectSG
+illum 4
+Kd 0.00 0.00 0.00
+Ka 0.20 0.20 0.20
+Tf 1.00 1.00 1.00
+map_Kd rock_010_c.png
+Ni 1.00
+Ks 0.20 0.20 0.20
+Ns 18.00
