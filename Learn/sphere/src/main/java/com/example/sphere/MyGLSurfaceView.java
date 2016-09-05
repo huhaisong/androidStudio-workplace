@@ -45,26 +45,9 @@ public class MyGLSurfaceView extends GLSurfaceView {
         //setRenderMode(RENDERMODE_CONTINUOUSLY);
     }
 
-    Handler myHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 0) {
-                isSended = true;
-                reStartTrack();
-            }
-        }
-    };
-
-    private void reStartTrack() {
-        mHeadTracker.stopTracking();
-        mHeadTracker.startTracking();
-    }
-
     public void onPause() {
         super.onPause();
         mHeadTracker.stopTracking();
-
     }
 
     public void onResume() {
@@ -72,7 +55,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
         mHeadTracker.startTracking();
         this.requestRender();
 
-        new Thread(new Runnable() {
+    /*    new Thread(new Runnable() {
             float[] newheadView = new float[16];
             float[] oldheadView = new float[16];
             boolean b = false;
@@ -103,7 +86,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
                     }
                 }
             }
-        }).start();
+        }).start();*/
     }
 
     public void initTexture()//textureId
@@ -237,7 +220,7 @@ public class MyGLSurfaceView extends GLSurfaceView {
             GLES20.glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
             mVertexShader = ShaderUtil.loadFromAssetsFile("vertex.sh", getResources());
             mFragmentShader = ShaderUtil.loadFromAssetsFile("frag.sh", getResources());
-            mProgram = createProgram(mVertexShader, mFragmentShader);
+            mProgram = ShaderUtil.createProgram(mVertexShader, mFragmentShader);
             maPositionHandle = GLES20.glGetAttribLocation(mProgram, "aPosition");
             maTexCoorHandle = GLES20.glGetAttribLocation(mProgram, "aTexCoor");
             mMVPMatrixHandle = GLES20.glGetUniformLocation(mProgram, "uMVPMatrix");
@@ -253,7 +236,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
         public void onSurfaceChanged(GL10 gl, int width, int height) {
             mWidth = width;
             mHeight = height;
-
         }
 
         @Override
@@ -289,13 +271,6 @@ public class MyGLSurfaceView extends GLSurfaceView {
 
         public void update() {
             mHeadTracker.getLastHeadView(mHeadView, 0);
-            if (Float.isNaN(mHeadView[0])) {
-                if (!isSended) {
-                    myHandler.sendEmptyMessage(0);
-                }
-                show(mHeadView);
-                return;
-            }
             perspectiveM(projectionMatrix, 0, 75.0f, mWidth / mHeight / 2.0f, 0.1f, 400.0f);
             Matrix.setIdentityM(modelViewMatrix, 0);
             Matrix.multiplyMM(temp, 0, projectionMatrix, 0, mHeadView, 0);

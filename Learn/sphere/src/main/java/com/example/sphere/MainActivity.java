@@ -20,8 +20,8 @@ public class MainActivity extends Activity {
 
         mGLSurfaceView = new MyGLSurfaceView(this);
         setContentView(mGLSurfaceView);
-        mGLSurfaceView.requestFocus();
-        mGLSurfaceView.setFocusableInTouchMode(true);
+     //   mGLSurfaceView.requestFocus();
+      //  mGLSurfaceView.setFocusableInTouchMode(true);
     }
 
     @Override

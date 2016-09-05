@@ -57,11 +57,9 @@ public class test_videoplayer extends Activity {
         int progress;
 
         @Override
-        public void onProgressChanged(SeekBar seekBar, int progress,
-                                      boolean fromUser) {
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
             // 原本是(progress/seekBar.getMax())*player.mediaPlayer.getDuration()
-            this.progress = progress * player.mediaPlayer.getDuration()
-                    / seekBar.getMax();
+            this.progress = progress * player.mediaPlayer.getDuration() / seekBar.getMax();
         }
 
         @Override

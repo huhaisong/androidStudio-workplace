@@ -20,6 +20,7 @@ public class TextureRect {
     String mFragmentShader;//片元着色器
     FloatBuffer mVertexBuffer;//顶点坐标数据缓冲
     FloatBuffer mTexCoorBuffer;//顶点纹理坐标数据缓冲
+
     public TextureRect(MySurfaceView mv) {
         initVertexData();
         initShader(mv);
@@ -57,8 +58,7 @@ public class TextureRect {
 
     public void drawSelf(int texId) {
         GLES20.glUseProgram(mProgram);
-       // MatrixState.setInitStack();
-
+        //MatrixState.setInitStack();
         //GLES20.glUniformMatrix4fv(muMVPMatrixHandle, 1, false, MatrixState.getFinalMatrix(), 0);
         GLES20.glVertexAttribPointer(maPositionHandle, 3, GLES20.GL_FLOAT, false, 3 * 4, mVertexBuffer);
         GLES20.glVertexAttribPointer(maTexCoorHandle, 2, GLES20.GL_FLOAT, false, 2 * 4, mTexCoorBuffer);

@@ -25,8 +25,6 @@ public class Main extends Activity {
 		setContentView(R.layout.activity_main);
 		
 		mGLView = (VRView) findViewById(R.id.vrview);
-	
-
 	}
 	
 	@Override

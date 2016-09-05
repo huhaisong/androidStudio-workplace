@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/3dvideo/3dvideo.iml" filepath="$PROJECT_DIR$/3dvideo/3dvideo.iml" />
       <module fileurl="file://$PROJECT_DIR$/VrApplication.iml" filepath="$PROJECT_DIR$/VrApplication.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/game/game.iml" filepath="$PROJECT_DIR$/game/game.iml" />
       <module fileurl="file://$PROJECT_DIR$/loadbyengine/loadbyengine.iml" filepath="$PROJECT_DIR$/loadbyengine/loadbyengine.iml" />
       <module fileurl="file://$PROJECT_DIR$/piked_up/piked_up.iml" filepath="$PROJECT_DIR$/piked_up/piked_up.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sphere/sphere.iml" filepath="$PROJECT_DIR$/sphere/sphere.iml" />
       <module fileurl="file://$PROJECT_DIR$/test/test.iml" filepath="$PROJECT_DIR$/test/test.iml" />
       <module fileurl="file://$PROJECT_DIR$/vr_launcher/vr_launcher.iml" filepath="$PROJECT_DIR$/vr_launcher/vr_launcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vrlauncher/vrlauncher.iml" filepath="$PROJECT_DIR$/vrlauncher/vrlauncher.iml" />
     </modules>
   </component>
 </project>

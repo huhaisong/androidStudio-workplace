@@ -1,1 +1,1 @@
-include ':app', ':vr_launcher', ':piked_up', ':test', ':loadbyengine'
+include ':app', ':vr_launcher', ':piked_up', ':test', ':loadbyengine', ':sphere', ':3dvideo', ':game', ':vrlauncher'

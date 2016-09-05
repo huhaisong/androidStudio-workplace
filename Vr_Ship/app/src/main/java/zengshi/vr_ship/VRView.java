@@ -142,6 +142,8 @@ public class VRView extends VRGLSurfaceView {
         int num = mCursor.getCount();
         //	Log.e("ar110","num:"+num);
         if (num > 0) {
+            mList360.clear();
+            mList3d.clear();
             do {
                 String path = mCursor.getString(mCursor.getColumnIndex(MediaStore.Images.Media.DATA));
                 long id = mCursor.getLong(mCursor.getColumnIndex("_ID"));
@@ -1158,7 +1160,6 @@ public class VRView extends VRGLSurfaceView {
             initTexture();
             //调用此方法产生摄像机9参数位置矩阵
             android.opengl.Matrix.setLookAtM(mVMatrix, 0, 0, 0, 4, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
-
         }
 
         private void blitNumber(int number, int x, int y) {
